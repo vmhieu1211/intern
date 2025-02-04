@@ -1,0 +1,138 @@
+@extends('layouts.frontend')
+
+@section('seo')
+    <title>Chào mừng đến với | {{ $systemName->name }}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="{{ $systemName->description }}">
+    <meta name="keywords" content="{{ $systemName->name }}, {{ $systemName->name }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@endsection
+
+@section('content')
+    <!-- letest product section -->
+    <section class="top-letest-product-section">
+        <div class="container">
+            <div class="section-title">
+                <h3>SẢN PHẨM MỚI NHẤT</h3>
+            </div>
+            <div class="product-slider owl-carousel">
+                @foreach ($products as $p)
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            @if ($p->on_sale == 1)
+                                <div class="tag-sale">GIẢM GIÁ</div>
+                            @endif
+                            @if ($p->is_new == 1)
+                                <div class="tag-new">Mới</div>
+                            @endif
+                            <a href="{{ route('single-product', $p->slug) }}">
+                                @if ($p->photos->count() > 0)
+                                    <img src="/storage/{{ $p->photos->first()->images }} " alt="">
+                                @else
+                                    <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
+                                @endif
+                            </a>
+                            <div class="pi-links">
+                                <form action="{{ route('cart.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $p->id }}">
+                                    <input type="hidden" name="name" value="{{ $p->name }}">
+                                    <input type="hidden" name="price" value="{{ $p->price }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào
+                                            giỏ hàng</span></button>
+                                </form>
+                                <form action="{{ route('wishlist.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $p->id }}">
+                                    <input type="hidden" name="name" value="{{ $p->name }}">
+                                    <input type="hidden" name="price" value="{{ $p->price }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="wishlist-btn"><i class="flaticon-heart"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6> {{ $p->price }}đ</h6>
+                            <a href="{{ route('single-product', $p->slug) }}">
+                                <p>{{ $p->name }}</p>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- letest product section end -->
+
+
+
+    <!-- Product filter section -->
+    <section class="product-filter-section">
+        <div class="container">
+            <div class="section-title">
+                <h3>CÁC SẢN PHẨM BÁN CHẠY NHẤT</h3>
+            </div>
+            <ul class="product-filter-menu">
+                @foreach ($categories as $cat)
+                    <li><a href="{{ route('frontendCategory', $cat->slug) }}">{{ $cat->name }}</a></li>
+                @endforeach
+            </ul>
+            <div class="row">
+                @foreach ($products as $p)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                @if ($p->on_sale == 1)
+                                    <div class="tag-sale">ĐANG GIẢM GIÁ</div>
+                                @endif
+                                @if ($p->is_new == 1)
+                                    <div class="tag-new">Mới</div>
+                                @endif
+                                <a href="{{ route('single-product', $p->slug) }}">
+                                    <a href="{{ route('single-product', $p->slug) }}">
+                                        @if ($p->photos->count() > 0)
+                                            <img src="/storage/{{ $p->photos->first()->images }} " alt="">
+                                        @else
+                                            <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
+                                        @endif
+                                    </a>
+                                </a>
+                                <div class="pi-links">
+                                    <form action="{{ route('cart.store') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $p->id }}">
+                                        <input type="hidden" name="name" value="{{ $p->name }}">
+                                        <input type="hidden" name="price" value="{{ $p->price }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào
+                                                giỏ hàng</span></button>
+                                    </form>
+                                    <form action="{{ route('wishlist.store') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $p->id }}">
+                                        <input type="hidden" name="name" value="{{ $p->name }}">
+                                        <input type="hidden" name="price" value="{{ $p->price }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="wishlist-btn"><i
+                                                class="flaticon-heart"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="pi-text">
+                                <h6> {{ $p->price }}đ</h6>
+                                <p> {{ $p->name }} </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @if ($products->count() > 8)
+                <div class="text-center pt-5">
+                    <a href="{{ route('frontendCategories') }}" class="site-btn sb-line sb-dark">XEM THÊM</a>
+                </div>
+            @endif
+        </div>
+    </section>
+    <!-- Product filter section end -->
+@endsection
