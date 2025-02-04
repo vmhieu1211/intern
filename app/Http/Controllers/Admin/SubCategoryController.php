@@ -34,7 +34,7 @@ class SubCategoryController extends Controller
         ]);
         return redirect()->route('subcategories.index')->with('success', 'Sub-Category created successfully!');
     }
-    
+
     public function edit($slug)
     {
         $categories = Category::all();
@@ -63,16 +63,10 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::where('slug', $slug)->firstOrFail();
 
-        if ($subCategory->products->count() > 0) {
-            session()->flash('error', 'Take a chill pill, this sub-category has some products!');
-
-            return redirect(route('subcategories.index'));
+        if ($subCategory->products()->count() > 0) {
+            return redirect()->route('subcategories.index')->with('error', 'Take a chill pill, this sub-category has some products!');
         }
-
         $subCategory->delete();
-
-        session()->flash('success', 'Sub-Category deleted successfully!');
-
-        return redirect(route('subcategories.index'));
+        return redirect()->route('subcategories.index')->with('success', 'Sub-Category deleted successfully!');
     }
 }

@@ -37,7 +37,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.create', compact('category'));
     }
-    
+
     public function update(CategoryRequest $request, Category $category)
     {
         $slug = Str::slug($request->name);
@@ -51,7 +51,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        if ($category->product()->count() > 0) {
+        if ($category->products()->count() > 0) {
             return redirect()->route('categories.index')
                 ->with('error', 'Take it easy, you cannot delete this category because it has some products');
         }
