@@ -28,7 +28,7 @@ class ProductController extends Controller
             ->paginate(10);
 
         return view('admin.products.index', compact('products'));
-    }123
+    }
 
     public function create()
     {
