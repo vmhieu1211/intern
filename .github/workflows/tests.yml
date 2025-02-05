@@ -1,24 +1,16 @@
-name: Tests
+name: Run tests
 
-on:
-  push:
-    branches:
-      - master
-      - "*.x"
-  pull_request:
-  schedule:
-    - cron: "0 0 * * *"
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
   tests:
+    name: Run tests
     runs-on: ubuntu-latest
 
-  services:
+    # Configure the MySQL service
+    services:
       mysql:
-        image: mysql:8.2
+        image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
@@ -26,41 +18,28 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [8.2]
-
-    name: PHP ${{ matrix.php }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      # Checkout the repository
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
+      # Setup PHP 8.3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          coverage: none
+          php-version: 8.3
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+      # Install the Composer dependencies
+      - name: Run composer install
+        run: composer install -n --prefer-dist
 
-    - name: Prepare Laravel Application
+      # Copy the .env.ci file to .env and generate the application key
+      - name: Prepare Laravel Application
         run: |
           cp .env.ci .env
           php artisan key:generate
 
-      # - name: Update .env for MySQL
-      #   run: |
-      #     sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-      #     sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-      #     sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
-      #     sed -i 's/DB_DATABASE=.*/DB_DATABASE=intern/' .env
-      #     sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
-      #     sed -i 's/DB_PASSWORD=.*/DB_PASSWORD= /' .env
-
-
-       - name: Run tests
+      # Run the tests
+      - name: Run tests
         run: php artisan test
