@@ -21,7 +21,7 @@ class ProductController extends Controller
         $products = Product::with('photos', 'category', 'subCategory')
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'LIKE', '%' . $query . '%')
-                    ->orWhere('code', 'LIKE', '%' . $query . '%')
+                    ->orWhere('code', 'LIKE'123 '%' . $query . '%')
                     ->orWhere('description', 'LIKE', '%' . $query . '%');
             })
             ->orderBy('created_at', 'DESC')
