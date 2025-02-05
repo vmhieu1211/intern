@@ -55,8 +55,8 @@ jobs:
       - name: Wait for MySQL to be ready
         run: sleep 15
 
-      - name: Run migrations
-        run: php artisan migrate --force
+      # - name: Run migrations
+      #   run: php artisan migrate --force
 
       - name: Execute tests
         run: vendor/bin/phpunit
