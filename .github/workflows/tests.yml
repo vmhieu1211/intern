@@ -39,6 +39,23 @@ jobs:
 
       - name: Copy environment file
         run: cp .env.example .env
+        - name: Update .env for MySQL
+        run: |
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=intern/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD= /' .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Wait for MySQL to be ready
+        run: sleep 15
+
+      - name: Run migrations
+        run: php artisan migrate --force
 
       - name: Generate app key
         run: php artisan key:generate
