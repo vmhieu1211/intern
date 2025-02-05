@@ -146,13 +146,14 @@
                                     trò</a>
                             </li>
 
-                            {{-- <li class="list-group-item bg-primary border-white">
-                                    <a href="{{ route('reports.revenue') }}" class="text-decoration-none text-light">Doanh
-                                        thu</a>
-                                </li> --}}
+                            <li class="list-group-item bg-primary border-white">
+                                <a href="{{ route('revenue.index') }}" class="text-decoration-none text-light">Doanh
+                                    thu</a>
+                            </li>
 
                             <li class="list-group-item bg-primary border-white">
-                                <a href="{{ route('order-statuses.index') }}" class="text-decoration-none text-light">Trạng thái đơn hàng</a>
+                                <a href="{{ route('order-statuses.index') }}"
+                                    class="text-decoration-none text-light">Trạng thái đơn hàng</a>
                             </li>
                         </ul>
 

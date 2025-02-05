@@ -26,6 +26,7 @@
                         </span>
                     @enderror
                 </div>
+
                 <div class="form-input">
                     <span><i class="fa fa-key"></i></span>
                     <input type="password" name="password" placeholder="Password"
@@ -38,7 +39,7 @@
                         </span>
                     @enderror
                 </div>
-                
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="remember" id="remember"

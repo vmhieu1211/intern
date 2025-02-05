@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\CouponsController;
 use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\admin\RevenueController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CheckoutController;
@@ -63,4 +64,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('admin/orders', OrderController::class);
     Route::resource('admin/order-statuses', OrderStatusController::class);
     Route::delete('admin/products/photo/{id}', [ProductController::class, 'destroyImage'])->name('destroyImage');
+    Route::resource('admin/revenue', RevenueController::class);
 });
