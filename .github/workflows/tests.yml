@@ -37,7 +37,7 @@ jobs:
       # Copy the .env.ci file to .env and generate the application key
       - name: Prepare Laravel Application
         run: |
-          cp .env.ci .env
+          cp .env.example .env
           php artisan key:generate
 
       # Run the tests
