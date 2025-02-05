@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - master
-      - '*.x'
+      - "*.x"
   pull_request:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read
@@ -39,7 +39,8 @@ jobs:
 
       - name: Copy environment file
         run: cp .env.example .env
-        - name: Update .env for MySQL
+
+      - name: Update .env for MySQL
         run: |
           sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
@@ -56,9 +57,6 @@ jobs:
 
       - name: Run migrations
         run: php artisan migrate --force
-
-      - name: Generate app key
-        run: php artisan key:generate
 
       - name: Execute tests
         run: vendor/bin/phpunit
