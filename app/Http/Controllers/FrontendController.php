@@ -15,15 +15,23 @@ use Illuminate\Support\Facades\Log;
 class FrontendController extends Controller
 {
     // Returns the platform welcome or landing page
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $query = $request->input('search');
 
-        $products = Product::orderBy('created_at', 'DESC')->with('category', 'photos')->paginate(8);
+        $categories = Category::all();
+        $products = Product::orderBy('created_at', 'DESC')
+            ->with('category', 'photos')
+            ->when($query, function ($q) use ($query) {
+                $q->where('name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('code', 'LIKE', '%' . $query . '%')
+                    ->orWhere('description', 'LIKE', '%' . $query . '%');
+            })
+            ->paginate(8);
 
         $systemName = SystemSetting::firstOrFail();
 
-        return view('welcome', compact('products', 'categories', 'systemName'));
+        return view('welcome', compact('products', 'categories', 'systemName', 'query'));
     }
 
     // show single product details
