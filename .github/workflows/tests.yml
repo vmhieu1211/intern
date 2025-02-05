@@ -52,8 +52,8 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
-      - name: Wait for MySQL to be ready
-        run: sleep 15
+      # - name: Wait for MySQL to be ready
+      #   run: sleep 15
 
       # - name: Run migrations
       #   run: php artisan migrate --force
