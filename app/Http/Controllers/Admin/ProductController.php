@@ -182,8 +182,6 @@ class ProductController extends Controller
 
         $image->delete();
 
-        session()->flash('success', "Image deleted successfully.");
-
-        return redirect()->back();
+        return redirect()->back()->with('success', "Image deleted successfully.");
     }
 }
