@@ -17,9 +17,7 @@ use App\Http\Controllers\Frontend\CouponsController;
 use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\admin\RevenueController;
 use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Admin\SystemSettingsController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('welcome');
@@ -33,7 +31,6 @@ Route::get('/contact', [FrontendController::class, 'contact'])->name('contact-us
 
 Route::resource('cart', CartController::class);
 
-Route::resource('wishlist', WishlistController::class);
 Route::post('coupons', [CouponsController::class, 'store'])->name('coupons.store');
 Route::delete('coupons', [CouponsController::class, 'destroy'])->name('coupons.destroy');
 

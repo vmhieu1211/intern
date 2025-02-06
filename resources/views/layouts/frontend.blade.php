@@ -40,15 +40,6 @@
                             <div class="user-panel">
                                 <div class="up-item">
                                     <div class="shopping-card">
-                                        <i class="flaticon-heart"></i>
-                                        @if (Cart::instance('wishlist')->count() != 0)
-                                            <span>{{ Cart::instance('wishlist')->count() }}</span>
-                                        @endif
-                                    </div>
-                                    <a href="{{ route('wishlist.index') }}">Danh sách mong muốn</a>
-                                </div>
-                                <div class="up-item">
-                                    <div class="shopping-card">
                                         <i class="flaticon-bag"></i>
                                         <span>{{ Cart::instance('default')->count() }}</span>
                                     </div>
