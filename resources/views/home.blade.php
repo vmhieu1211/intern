@@ -18,15 +18,13 @@
         		<th>Đơn hàng</th>
         		<th>Sản phẩm</th>
         		<th>Tin nhắn</th>
-        		<th>Bán hàng</th>
-        	</thead>
+         	</thead>
         	<tbody>
         		<tr>
-        			{{-- <td>{{ $users }}</td>
+        			<td>{{ $users }}</td>
         			<td>{{ $orders }}</td>
         			<td>{{ $products }}</td>
-        			<td>{{ $messages }}</td> --}}
-        			<td></td>
+        			<td>{{ $messages }}</td>
         		</tr>
         	</tbody>
         </table>

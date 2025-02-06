@@ -4,7 +4,7 @@
 <head>
     @yield('seo')
     <!-- Favicon -->
-    {{-- <link href="/storage/{{$shareSettings->favicon}}" rel="shortcut icon"/> --}}
+    <link href="/storage/{{ $shareSettings->favicon }}" rel="shortcut icon" />
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
@@ -31,7 +31,7 @@
                     <div class="col-lg-2 text-center text-lg-left">
                         <!-- logo -->
                         <a href="/" class="site-logo">
-                            <img src="/storage/{{ $systemName->logo }}" alt="">
+                            <img src="/storage/{{ $shareSettings->logo }}" alt="">
                         </a>
                     </div>
                     <!-- search area -->

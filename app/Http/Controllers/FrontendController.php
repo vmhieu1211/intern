@@ -29,9 +29,9 @@ class FrontendController extends Controller
             })
             ->paginate(8);
 
-        $systemName = SystemSetting::firstOrFail();
+        $shareSettings = SystemSetting::firstOrFail();
 
-        return view('welcome', compact('products', 'categories', 'systemName', 'query'));
+        return view('welcome', compact('products', 'categories', 'shareSettings'));
     }
 
     // show single product details
@@ -43,19 +43,19 @@ class FrontendController extends Controller
 
         $relatedProducts = $product->category->products()->with('photos')->inRandomOrder()->take(5)->get();
 
-        $systemName = SystemSetting::first();
+        $shareSettings = SystemSetting::first();
 
-        return view('client.product.show', compact('product', 'relatedProducts', 'singleImage', 'systemName'));
+        return view('client.product.show', compact('product', 'relatedProducts', 'singleImage', 'shareSettings'));
     }
 
     // Get contact us page
     public function contact()
     {
         $info = SystemSetting::first();
-
+        $shareSettings = SystemSetting::first();
         $products = Product::orderBy('id', 'DESC')->with('photos')->take(4)->get();
 
-        return view('contact', compact('info', 'products'));
+        return view('contact', compact('info', 'products', 'shareSettings'));
     }
 
     //send message from contact us
@@ -67,7 +67,7 @@ class FrontendController extends Controller
             'email' => 'required|email',
             'subject' => 'required',
             'message' => 'required',
-            'g-recaptcha-response' => config('services.recaptcha.key') ? 'required|recaptcha' : 'nullable',
+            // 'g-recaptcha-response' => config('services.recaptcha.key') ? 'required|recaptcha' : 'nullable',
         ]);
 
         // Save contact info
@@ -90,7 +90,9 @@ class FrontendController extends Controller
 
         $systemInfo = SystemSetting::first();
 
-        return view('categories', compact('products', 'category', 'systemInfo'));
+        $shareSettings = SystemSetting::first();
+
+        return view('categories', compact('products', 'category', 'systemInfo', 'shareSettings'));
     }
 
     // diplay a single category and its products

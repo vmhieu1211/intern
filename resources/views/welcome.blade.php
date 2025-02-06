@@ -1,10 +1,10 @@
 @extends('layouts.frontend')
 
 @section('seo')
-    <title>Chào mừng đến với | {{ $systemName->name }}</title>
+    <title>Chào mừng đến với | {{ $shareSettings->name }}</title>
     <meta charset="UTF-8">
-    <meta name="description" content="{{ $systemName->description }}">
-    <meta name="keywords" content="{{ $systemName->name }}, {{ $systemName->name }}">
+    <meta name="description" content="{{ $shareSettings->description }}">
+    <meta name="keywords" content="{{ $shareSettings->name }}, {{ $shareSettings->name }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 @endsection
 

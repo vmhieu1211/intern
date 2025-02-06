@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Contact;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $users = User::count();
+        $orders = Order::count();
+        $products = Product::count();
+        $messages = Contact::count();
+        return view('home', compact('products', 'users', 'messages', 'orders'));
     }
 }
