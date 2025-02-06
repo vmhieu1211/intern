@@ -39,8 +39,9 @@
                                     <input type="hidden" name="name" value="{{ $p->name }}">
                                     <input type="hidden" name="price" value="{{ $p->price }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào
-                                            giỏ hàng</span></button>
+                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i>
+                                        <span>Thêm vào giỏ</span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -97,8 +98,10 @@
                                         <input type="hidden" name="name" value="{{ $p->name }}">
                                         <input type="hidden" name="price" value="{{ $p->price }}">
                                         <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào
-                                                giỏ hàng</span></button>
+                                        <button type="submit" class="add-card">
+                                            <i class="flaticon-bag"></i>
+                                            <span>Thêm vào giỏ</span>
+                                        </button>
                                     </form>
                                 </div>
                             </div>

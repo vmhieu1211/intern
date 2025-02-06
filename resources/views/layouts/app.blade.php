@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    {{-- <link href="/storage/{{ $shareSettings->favicon }}" rel="shortcut icon" /> --}} 
+    {{-- <link href="/storage/{{ $shareSettings->favicon }}" rel="shortcut icon" /> --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -125,10 +125,10 @@
                                     giá</a>
                             </li>
 
-                            {{-- <li class="list-group-item bg-primary border-white">
-                                    <a href="{{ route('contactMessages') }}" class="text-decoration-none text-light">Góp
-                                        ý</a>
-                                </li> --}}
+                            <li class="list-group-item bg-primary border-white">
+                                <a href="{{ route('contactMessages') }}" class="text-decoration-none text-light">Góp
+                                    ý</a>
+                            </li>
 
 
                             <li class="list-group-item bg-primary border-white">
