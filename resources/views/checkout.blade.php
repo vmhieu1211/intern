@@ -60,22 +60,10 @@
                                 <input type="radio" name="payment_method" value="cash_on_delivery" required>
                                 Thanh toán khi nhận hàng
                             </li>
-                            <li>
-                                <input type="radio" name="payment_method" value="card_payment" id="card_payment">
-                                Thanh toán bằng thẻ
-                            </li>
+
                         </ul>
 
                         <button type="submit" class="site-btn submit-order-btn">Đặt hàng</button>
-
-                        <script>
-                            document.getElementById('card_payment').addEventListener('change', function() {
-                                if (this.checked) {
-                                    window.location.href = "{{ url('stripe') }}"; // Redirects when selected
-                                }
-                            });
-                        </script>
-
                     </form>
                 </div>
                 <div class="col-lg-4 order-1 order-lg-2">
