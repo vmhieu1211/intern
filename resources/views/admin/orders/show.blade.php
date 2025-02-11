@@ -13,7 +13,7 @@
 
         <div class="card">
             <div class="card-header">{{ $order->order_number }} <strong class="ml-5">Tổng tiền:
-                    {{ number_format($order->billing_total, 3) }}đ</strong></div>
+                    $ {{ $order->billing_total }} </strong></div>
             <div class="card-body">
                 <h4>Sản phẩm đã đặt hàng</h4>
                 <table class="table table-bordered table-responsive table-dark">
@@ -28,7 +28,7 @@
                             <tr>
                                 <td>{{ $p->code }}</td>
                                 <td>{{ $p->name }}</td>
-                                <td>{{ $p->price }}</td>
+                                <td>${{ $p->price }}</td>
                                 <td>{{ $p->pivot->quantity }}</td>
                             </tr>
                         @endforeach

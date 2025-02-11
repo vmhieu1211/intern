@@ -37,7 +37,7 @@
                             <td>{{ $order->billing_phone }}</td>
                             <td>{{ $order->billing_address }}</td>
                             <td>{{ $order->billing_city }}</td>
-                            <td> {{ number_format($order->billing_total, 3) }}đ</td>
+                            <td> ${{ $order->billing_total }}</td>
                             <td>{{ $order->payment_method }}</td>
                             <td>{{ $order->status->name }}</td>
                             <td>{{ $order->formatted_created_at }}</td>

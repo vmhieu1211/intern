@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SystemSetting;
 
 class ProfileController extends Controller
 {
@@ -15,8 +16,8 @@ class ProfileController extends Controller
         $orders = auth()->user()->orders()->orderBy('created_at', 'DESC')->paginate(5);
 
         $recentlyViewed = Product::inRandomOrder()->take(4)->get();
-
-        return view('profile.index', compact('orders', 'recentlyViewed'));
+        $shareSettings = SystemSetting::firstOrFail();
+        return view('profile.index', compact('orders', 'recentlyViewed', 'shareSettings'));
     }
 
     public function show($id)
@@ -30,15 +31,17 @@ class ProfileController extends Controller
         $products = $order->products()->get();
 
         $recentlyViewed = Product::inRandomOrder()->take(4)->get();
+        $shareSettings = SystemSetting::firstOrFail();
 
-        return view('profile.show', compact('order', 'recentlyViewed', 'products'));
+        return view('profile.show', compact('order', 'recentlyViewed', 'products', 'shareSettings'));
     }
 
     public function edit()
     {
         $user = auth()->user();
+        $shareSettings = SystemSetting::firstOrFail();
 
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', compact('user', 'shareSettings'));
     }
 
     public function update(Request $request)

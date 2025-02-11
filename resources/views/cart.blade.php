@@ -66,7 +66,7 @@
 
                                             </td>
                                             <td class="total-col">
-                                                <h4>{{ number_format($item->subtotal, 3, '.', '') }}đ</h4>
+                                                <h4>${{ $item->subtotal }}</h4>
                                             </td>
                                             <td class="total-col">
                                                 <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
@@ -94,20 +94,20 @@
                                                 </form>
                                             </td>
                                             <td></td>
-                                            <td>-{{ $discount }}đ</td>
+                                            <td>-${{ $discount }} </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Thành tiền</strong></td>
                                             <td></td>
                                             <td></td>
-                                            <td><strong>{{ $newSubtotal }}đ</strong></td>
+                                            <td><strong>${{ $newSubtotal }} </strong></td>
                                         </tr>
                                     @endif
                                 </tbody>
                             </table>
                         </div>
                         <div class="total-cost">
-                            <h6>Tổng <span>{{ $newTotal }}đ</span></h6>
+                            <h6>Tổng <span>${{ $newTotal }} </span></h6>
                         </div>
                     </div>
                 </div>
@@ -161,15 +161,7 @@
                                         <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>THÊM VÀO
                                                 GIỎ HÀNG</span></button>
                                     </form>
-                                    <form action="{{ route('wishlist.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $like->id }}">
-                                        <input type="hidden" name="name" value="{{ $like->name }}">
-                                        <input type="hidden" name="price" value="{{ $like->price }}">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="wishlist-btn"><i
-                                                class="flaticon-heart"></i></button>
-                                    </form>
+                                  
                                 </div>
                             </div>
                             <div class="pi-text">

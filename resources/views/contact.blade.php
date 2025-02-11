@@ -121,14 +121,7 @@
                                         <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào
                                                 giỏ hàng</span></button>
                                     </form>
-                                    <form action="{{ route('wishlist.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $p->id }}">
-                                        <input type="hidden" name="name" value="{{ $p->name }}">
-                                        <input type="hidden" name="price" value="{{ $p->price }}">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="wishlist-btn"><i class="flaticon-heart"></i></button>
-                                    </form>
+
                                 </div>
                             </div>
                             <div class="pi-text">
@@ -167,10 +160,10 @@
         }
     </script>
     <!--Load the API from the specified URL
-        * The async attribute allows the browser to render the page while the API loads
-        * The key parameter will contain your own API key (which is not needed for this tutorial)
-        * The callback parameter executes the initMap() function
-        -->
+            * The async attribute allows the browser to render the page while the API loads
+            * The key parameter will contain your own API key (which is not needed for this tutorial)
+            * The callback parameter executes the initMap() function
+            -->
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
     </body>
 

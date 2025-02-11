@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Slide;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
 {
@@ -18,6 +19,7 @@ class FrontendController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
+        $slides = Slide::all();
 
         $categories = Category::all();
         $products = Product::orderBy('created_at', 'DESC')
@@ -31,7 +33,7 @@ class FrontendController extends Controller
 
         $shareSettings = SystemSetting::firstOrFail();
 
-        return view('welcome', compact('products', 'categories', 'shareSettings'));
+        return view('welcome', compact('products', 'categories', 'shareSettings','slides'));
     }
 
     // show single product details

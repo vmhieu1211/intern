@@ -8,18 +8,22 @@ use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Stripe;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
         $systemInfo = SystemSetting::first();
+        $shareSettings = SystemSetting::first();
 
         $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
         $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
         $newTotal = number_format($newSubtotal, 3);
 
-        return view('checkout', compact('systemInfo'))->with([
+        return view('checkout', compact('systemInfo', 'shareSettings'))->with([
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
@@ -57,6 +61,7 @@ class CheckoutController extends Controller
             'billing_email' => $request->billing_email,
             'notes' => $request->notes,
             'order_status_id' => $request->order_status_id ?? 1,
+            'payment_method' => $request->payment_method,
 
         ]);
 
@@ -96,5 +101,25 @@ class CheckoutController extends Controller
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
         ]);
+    }
+
+    public function stripe(): View
+    {
+        return view('stripe');
+    }
+
+    public function stripePost(Request $request): RedirectResponse
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create([
+            "amount" => 10 * 100,
+            "currency" => "USD",
+            "source" => $request->stripeToken,
+            "description" => "Payment"
+        ]);
+
+        return back()
+            ->with('success', 'Payment successful!');
     }
 }

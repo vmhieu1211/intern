@@ -140,6 +140,10 @@
                                 <a href="{{ route('system-settings.index') }}"
                                     class="text-decoration-none text-light">Cài đặt hệ thống</a>
                             </li>
+                            <li class="list-group-item bg-primary border-white">
+                                <a href="{{ route('slides.index') }}"
+                                    class="text-decoration-none text-light">Slides</a>
+                            </li>
 
                             <li class="list-group-item bg-primary border-white">
                                 <a href="{{ route('roles.index') }}" class="text-decoration-none text-light">Vai

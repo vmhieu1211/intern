@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        $shareSettings = SystemSetting::firstOrFail();
+        return view('auth.login',compact('shareSettings'));
     }
 
     public function login(Request $request)

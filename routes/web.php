@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\CouponsController;
 use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Admin\SystemSettingsController;
@@ -50,6 +51,10 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::controller(CheckoutController::class)->group(function () {
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('admin/categories', CategoryController::class);
@@ -65,4 +70,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('admin/revenue', RevenueController::class);
     Route::get('/admin/contact', [MessageController::class, 'index'])->name('contactMessages');
     Route::get('/admin/contact/{id}', [MessageController::class, 'show'])->name('contact.show');
+    Route::resource('admin/slides', SlideController::class);
 });

@@ -53,39 +53,29 @@
                                     value="{{ auth()->user()->notes }}">
                             </div>
                         </div>
-                        {{-- <div class="cf-title">Delievery Info</div> --}}
-                        {{-- <div class="row shipping-btns">
-                            <div class="col-6">
-                                <h4>Standard</h4>
-                            </div>
-                            <div class="col-6">
-                                <div class="cf-radio-btns">
-                                    <div class="cfr-item">
-                                        <input type="radio" name="shipping" id="ship-1">
-                                        <label for="ship-1">Free</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <h4>Next day delievery </h4>
-                            </div>
-                            <div class="col-6">
-                                <div class="cf-radio-btns">
-                                    <div class="cfr-item">
-                                        <input type="radio" name="shipping" id="ship-2">
-                                        <label for="ship-2">$3.45</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+
                         <div class="cf-title">Hình thức thanh toán</div>
                         <ul class="payment-list">
                             <li>
-                                <input type="radio" name="payment_method" value="cash_on_delivery">
+                                <input type="radio" name="payment_method" value="cash_on_delivery" required>
                                 Thanh toán khi nhận hàng
                             </li>
+                            <li>
+                                <input type="radio" name="payment_method" value="card_payment" id="card_payment">
+                                Thanh toán bằng thẻ
+                            </li>
                         </ul>
+
                         <button type="submit" class="site-btn submit-order-btn">Đặt hàng</button>
+
+                        <script>
+                            document.getElementById('card_payment').addEventListener('change', function() {
+                                if (this.checked) {
+                                    window.location.href = "{{ url('stripe') }}"; // Redirects when selected
+                                }
+                            });
+                        </script>
+
                     </form>
                 </div>
                 <div class="col-lg-4 order-1 order-lg-2">
@@ -102,15 +92,15 @@
                                         @endif
                                     </div>
                                     <h6>{{ $item->model->name }}</h6>
-                                    <p> {{ $item->subtotal }}đ</p>
+                                    <p> ${{ $item->subtotal }} </p>
                                     <p>Số lượng {{ $item->qty }}</p>
                                 </li>
                             @endforeach
                         </ul>
                         <ul class="price-list">
-                            <li>Tạm tính<span> {{ $newSubtotal }}đ</span></li>
+                            <li>Tạm tính<span> ${{ $newSubtotal }} </span></li>
                             <li>Miễn phí vận chuyển</li>
-                            <li class="total">Tổng<span>${{ $newTotal }}đ</span></li>
+                            <li class="total">Tổng<span>${{ $newTotal }} </span></li>
                         </ul>
                     </div>
                 </div>

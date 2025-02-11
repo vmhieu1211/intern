@@ -9,6 +9,73 @@
 @endsection
 
 @section('content')
+    @if ($slides->count() > 0)
+        <!-- Hero section -->
+        <section class="hero-section">
+            <div class="hero-slider owl-carousel">
+                @foreach ($slides as $slide)
+                    <div class="hs-item set-bg" data-setbg="/storage/{{ $slide->image }}">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-7 text-white">
+                                    <span>{{ $slide->heading }}</span>
+                                    <p>{{ Str::limit($slide->description, 100) }}</p>
+                                    <a href="/{{ $slide->link }}" class="site-btn sb-line">BUY NOW</a>
+                                    <a href="{{ route('contact-us') }}" class="inquire site-btn sb-white">INQUIRE</a>
+                                </div>
+                            </div>
+                            @if ($slide->from_price != null)
+                                <div class="offer-card text-white">
+                                    <span>from</span>
+                                    <h3>${{ $slide->from_price }}</h3>
+                                    <p>SHOP NOW</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="container">
+                <div class="slide-num-holder" id="snh-1"></div>
+            </div>
+        </section>
+        <!-- Hero section end -->
+    @endif
+
+    <!-- Features section -->
+    <section class="features-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="{{ asset('frontend/img/icons/1.png') }}" alt="#">
+                        </div>
+                        <h4>Fast Secure Payments</h4>
+                    </div>
+                </div>
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="{{ asset('frontend/img/icons/2.png') }}" alt="#">
+                        </div>
+                        <h4 class="text-white">Premium Products</h4>
+                    </div>
+                </div>
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="{{ asset('frontend/img/icons/3.png') }}" alt="#">
+                        </div>
+                        <h4>Affordable Delivery</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features section end -->
+
+
     <!-- letest product section -->
     <section class="top-letest-product-section">
         <div class="container">
@@ -46,7 +113,7 @@
                             </div>
                         </div>
                         <div class="pi-text">
-                            <h6> {{ $p->price }}đ</h6>
+                            <h6>${{ $p->price }}</h6>
                             <a href="{{ route('single-product', $p->slug) }}">
                                 <p>{{ $p->name }}</p>
                             </a>
@@ -106,7 +173,7 @@
                                 </div>
                             </div>
                             <div class="pi-text">
-                                <h6> {{ $p->price }}đ</h6>
+                                <h6>${{ $p->price }} </h6>
                                 <p> {{ $p->name }} </p>
                             </div>
                         </div>
