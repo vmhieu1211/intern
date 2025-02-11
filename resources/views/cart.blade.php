@@ -107,7 +107,7 @@
                             </table>
                         </div>
                         <div class="total-cost">
-                            <h6>Tổng <span>${{ $newTotal }} </span></h6>
+                            <h6>Tổng <span> {{ number_format($newTotal, 3) }} đ</span></h6>
                         </div>
                     </div>
                 </div>

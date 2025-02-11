@@ -18,9 +18,9 @@ class CartController extends Controller
 
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
 
-        $discount =  session()->get('coupon')['discount'] ?? 0;
-        $newSubtotal = Cart::subtotal() - $discount;
-        $newTotal = $newSubtotal;
+        $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
+        $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
+        $newTotal = number_format($newSubtotal, 3);
         return view('cart', compact('mightAlsoLike', 'systemInfo', 'shareSettings'))->with([
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
