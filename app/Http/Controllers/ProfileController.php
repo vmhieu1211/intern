@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $orders = auth()->user()->orders()->orderBy('created_at', 'DESC')->paginate(5);
+        $orders = auth()->user()->orders()->orderBy('created_at', 'DESC')->paginate(10);
 
         $recentlyViewed = Product::inRandomOrder()->take(4)->get();
         $shareSettings = SystemSetting::firstOrFail();

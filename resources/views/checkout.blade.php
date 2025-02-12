@@ -80,15 +80,15 @@
                                         @endif
                                     </div>
                                     <h6>{{ $item->model->name }}</h6>
-                                    <p> ${{ $item->subtotal }} </p>
+                                    <p> {{ $item->subtotal }}đ </p>
                                     <p>Số lượng {{ $item->qty }}</p>
                                 </li>
                             @endforeach
                         </ul>
                         <ul class="price-list">
-                            <li>Tạm tính<span> ${{ $newSubtotal }} </span></li>
+                            <li>Tạm tính<span> {{ $newSubtotal }}đ </span></li>
                             <li>Miễn phí vận chuyển</li>
-                            <li class="total">Tổng<span>${{ $newTotal }} </span></li>
+                            <li class="total">Tổng<span> {{ $newTotal }}đ</span></li>
                         </ul>
                     </div>
                 </div>

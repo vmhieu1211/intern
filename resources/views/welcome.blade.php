@@ -27,7 +27,7 @@
                             @if ($slide->from_price != null)
                                 <div class="offer-card text-white">
                                     <span>from</span>
-                                    <h3>${{ $slide->from_price }}</h3>
+                                    <h3> {{ $slide->from_price }}đ</h3>
                                     <p>SHOP NOW</p>
                                 </div>
                             @endif
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="pi-text">
-                            <h6>${{ $p->price }}</h6>
+                            <h6>{{ $p->price }}đ</h6>
                             <a href="{{ route('single-product', $p->slug) }}">
                                 <p>{{ $p->name }}</p>
                             </a>
