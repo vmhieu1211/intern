@@ -74,9 +74,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="social-links-warp">
+	{{-- <div class="social-links-warp">
 		<div class="container">
 			<p class="text-white text-center mt-5">Bản quyền &copy;<script>document.write(new Date().getFullYear());</script> Tất cả các quyền được bảo lưu | Phát triển bởi <a href="" target="_blank">Vu Minh Hieu</a></p>
 		</div>
-	</div>
+	</div> --}}
 </section>

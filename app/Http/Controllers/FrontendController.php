@@ -31,9 +31,8 @@ class FrontendController extends Controller
             })
             ->paginate(8);
 
-        $shareSettings = SystemSetting::firstOrFail();
 
-        return view('welcome', compact('products', 'categories', 'shareSettings','slides'));
+        return view('welcome', compact('products', 'categories', 'slides'));
     }
 
     // show single product details

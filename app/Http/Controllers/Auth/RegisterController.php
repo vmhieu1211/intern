@@ -7,10 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
 class RegisterController extends Controller
-{   
+{
     use RegistersUsers;
     protected function validator(array $data)
     {
@@ -23,6 +22,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],

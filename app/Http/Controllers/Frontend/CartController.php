@@ -14,14 +14,13 @@ class CartController extends Controller
     {
         //  Cart::destroy();
         $systemInfo = SystemSetting::first();
-        $shareSettings = SystemSetting::first();
 
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
 
         $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
         $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
         $newTotal = number_format($newSubtotal, 3);
-        return view('cart', compact('mightAlsoLike', 'systemInfo', 'shareSettings'))->with([
+        return view('cart', compact('mightAlsoLike', 'systemInfo'))->with([
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,

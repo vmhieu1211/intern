@@ -31,9 +31,8 @@ class ProfileController extends Controller
         $products = $order->products()->get();
 
         $recentlyViewed = Product::inRandomOrder()->take(4)->get();
-        $shareSettings = SystemSetting::firstOrFail();
 
-        return view('profile.show', compact('order', 'recentlyViewed', 'products', 'shareSettings'));
+        return view('profile.show', compact('order', 'recentlyViewed', 'products'));
     }
 
     public function edit()
