@@ -25,5 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $shareSettings = SystemSetting::first(); // Get settings
         View::share('shareSettings', $shareSettings);
+        $systemName = SystemSetting::first(); // Get settings
+        View::share('systemName', $systemName);
     }
 }

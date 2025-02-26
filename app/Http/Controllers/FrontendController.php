@@ -30,8 +30,6 @@ class FrontendController extends Controller
                     ->orWhere('description', 'LIKE', '%' . $query . '%');
             })
             ->paginate(8);
-
-
         return view('welcome', compact('products', 'categories', 'slides'));
     }
 
@@ -68,7 +66,6 @@ class FrontendController extends Controller
             'email' => 'required|email',
             'subject' => 'required',
             'message' => 'required',
-            // 'g-recaptcha-response' => config('services.recaptcha.key') ? 'required|recaptcha' : 'nullable',
         ]);
 
         // Save contact info
