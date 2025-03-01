@@ -10,15 +10,13 @@ class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('123123'), 
+            'password' => Hash::make('123123'), // Securely hash the password
         ]);
     }
 }
