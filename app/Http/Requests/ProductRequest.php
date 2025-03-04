@@ -26,9 +26,9 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|unique:products,name,' . $productId . '|max:100',
             'code' => 'required|unique:products,code,' . $productId . '|max:20',
-            'slug' => 'unique:products', // You can keep this unique for both create and update
+            'slug' => 'unique:products',
             'description' => 'required',
-            'images' => 'nullable|array', // Allow null for updates (images might not be uploaded during updates)
+            'images' => 'nullable|array',
             'price' => 'required|numeric|gt:0',
             'quantity' => 'required|numeric|gt:0|integer|min:1',
             'category_id' => 'required',
