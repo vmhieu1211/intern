@@ -9,15 +9,16 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\admin\RevenueController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Frontend\CouponsController;
 use App\Http\Controllers\Admin\OrderStatusController;
-use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Admin\SystemSettingsController;
@@ -51,10 +52,10 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::controller(CheckoutController::class)->group(function () {
-    Route::get('stripe', 'stripe');
-    Route::post('stripe', 'stripePost')->name('stripe.post');
-});
+Route::get('login/{provider}', [SocialLoginController::class, 'redirect'])->name('social.redirect');
+Route::get('login/{provider}/callback', [SocialLoginController::class, 'callback'])->name('social.callback');
+
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('admin/categories', CategoryController::class);
