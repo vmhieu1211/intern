@@ -12,33 +12,47 @@
     @if ($slides->count() > 0)
         <!-- Hero section -->
         <section class="hero-section">
-            <div class="hero-slider owl-carousel">
+            {{-- <div class="hero-slider owl-carousel">
                 @foreach ($slides as $slide)
-                    <div class="hs-item set-bg" data-setbg="/storage/{{ $slide->image }}">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-7 text-white">
-                                    <span>{{ $slide->heading }}</span>
-                                    <p>{{ Str::limit($slide->description, 100) }}</p>
-                                    <a href="/{{ $slide->link }}" class="site-btn sb-line">BUY NOW</a>
-                                    <a href="{{ route('contact-us') }}" class="inquire site-btn sb-white">INQUIRE</a>
-                                </div>
-                            </div>
-                            @if ($slide->from_price != null)
-                                <div class="offer-card text-white">
-                                    <span>from</span>
-                                    <h3> {{ $slide->from_price }}đ</h3>
-                                    <p>SHOP NOW</p>
-                                </div>
-                            @endif
-                        </div>
+                    <div class="hs-item set-bg" data-setbg="">
+
                     </div>
                 @endforeach
             </div>
             <div class="container">
                 <div class="slide-num-holder" id="snh-1"></div>
+            </div> --}}
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    @foreach ($slides as $index => $slide)
+
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="/storage/{{ $slide->image }}" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="..." alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="..." alt="Third slide">
+                    </div>
+                    @endforeach
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </section>
+
         <!-- Hero section end -->
     @endif
 
