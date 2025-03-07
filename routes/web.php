@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\admin\RevenueController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Frontend\CouponsController;
 use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\SubCategoryController;
@@ -51,10 +50,6 @@ Auth::routes();
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('login/{provider}', [SocialLoginController::class, 'redirect'])->name('social.redirect');
-Route::get('login/{provider}/callback', [SocialLoginController::class, 'callback'])->name('social.callback');
-
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
