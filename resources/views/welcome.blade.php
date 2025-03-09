@@ -30,16 +30,9 @@
                 </ol>
                 <div class="carousel-inner">
                     @foreach ($slides as $index => $slide)
-
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="/storage/{{ $slide->image }}" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="..." alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="..." alt="Third slide">
-                    </div>
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <img class="d-block w-100" src="/storage/{{ $slide->image }}" alt="Slide {{ $index + 1 }}">
+                        </div>
                     @endforeach
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
