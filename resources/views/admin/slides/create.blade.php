@@ -22,24 +22,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="heading">Slider Heading</label>
-                    <input type="text" name="heading" id="heading" class="form-control"
-                        value="{{ isset($slide) ? $slide->heading : '' }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Slider Description</label>
-                    <input type="text" name="description" id="description" class="form-control"
-                        value="{{ isset($slide) ? $slide->description : '' }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="link">Slider Link</label>
-                    <input type="text" name="link" id="link" class="form-control"
-                        value="{{ isset($slide) ? $slide->link : '' }}">
-                </div>
-
-                <div class="form-group">
                     <button type="submit"
                         class="btn btn-primary">{{ isset($slide) ? 'Update Slider' : 'Add Slider' }}</button>
                 </div>

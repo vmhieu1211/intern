@@ -1,22 +1,24 @@
 @extends('layouts.frontend')
 
 @section('seo')
-    <title>Chào mừng đến với | {{ $shareSettings->name }}</title>
+    <title>Welcome To | {{ $systemName->name }}</title>
     <meta charset="UTF-8">
-    <meta name="description" content="{{ $shareSettings->description }}">
-    <meta name="keywords" content="{{ $shareSettings->name }}, {{ $shareSettings->name }}">
+    <meta name="description" content="{{ $systemName->description }}">
+    <meta name="keywords" content="{{ $systemName->name }}, {{ $systemName->name }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 @endsection
 
 @section('content')
+
     @if ($slides->count() > 0)
         <!-- Hero section -->
         <section class="hero-section">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
                 <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    @foreach ($slides as $index => $slide)
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
+                            class="{{ $index == 0 ? 'active' : '' }}"></li>
+                    @endforeach
                 </ol>
                 <div class="carousel-inner">
                     @foreach ($slides as $index => $slide)
@@ -34,58 +36,61 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <!-- Hero section end -->
-    @endif
+        </section>
+        <!-- Hero section end -->
 
-    <!-- Features section -->
-    <section class="features-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 p-0 feature">
-                    <div class="feature-inner">
-                        <div class="feature-icon">
-                            <img src="{{ asset('frontend/img/icons/1.png') }}" alt="#">
+
+
+        <!-- Features section -->
+        <section class="features-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 p-0 feature">
+                        <div class="feature-inner">
+                            <div class="feature-icon">
+                                <img src="{{ asset('frontend/img/icons/1.png') }}" alt="#">
+                            </div>
+                            <h4>Fast Secure Payments</h4>
                         </div>
-                        <h4>Fast Secure Payments</h4>
                     </div>
-                </div>
-                <div class="col-md-4 p-0 feature">
-                    <div class="feature-inner">
-                        <div class="feature-icon">
-                            <img src="{{ asset('frontend/img/icons/2.png') }}" alt="#">
+                    <div class="col-md-4 p-0 feature">
+                        <div class="feature-inner">
+                            <div class="feature-icon">
+                                <img src="{{ asset('frontend/img/icons/2.png') }}" alt="#">
+                            </div>
+                            <h4 class="text-white">Premium Products</h4>
                         </div>
-                        <h4 class="text-white">Premium Products</h4>
                     </div>
-                </div>
-                <div class="col-md-4 p-0 feature">
-                    <div class="feature-inner">
-                        <div class="feature-icon">
-                            <img src="{{ asset('frontend/img/icons/3.png') }}" alt="#">
+                    <div class="col-md-4 p-0 feature">
+                        <div class="feature-inner">
+                            <div class="feature-icon">
+                                <img src="{{ asset('frontend/img/icons/3.png') }}" alt="#">
+                            </div>
+                            <h4>Affordable Delivery</h4>
                         </div>
-                        <h4>Affordable Delivery</h4>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- Features section end -->
+        </section>
+        <!-- Features section end -->
+    @endif
 
 
     <!-- letest product section -->
     <section class="top-letest-product-section">
         <div class="container">
             <div class="section-title">
-                <h3>SẢN PHẨM MỚI NHẤT</h3>
+                <h3>LATEST PRODUCTS</h3>
             </div>
             <div class="product-slider owl-carousel">
                 @foreach ($products as $p)
                     <div class="product-item">
                         <div class="pi-pic">
                             @if ($p->on_sale == 1)
-                                <div class="tag-sale">GIẢM GIÁ</div>
+                                <div class="tag-sale">ON SALE</div>
                             @endif
                             @if ($p->is_new == 1)
-                                <div class="tag-new">Mới</div>
+                                <div class="tag-new">New</div>
                             @endif
                             <a href="{{ route('single-product', $p->slug) }}">
                                 @if ($p->photos->count() > 0)
@@ -101,14 +106,13 @@
                                     <input type="hidden" name="name" value="{{ $p->name }}">
                                     <input type="hidden" name="price" value="{{ $p->price }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i>
-                                        <span>Thêm vào giỏ</span>
-                                    </button>
+                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>ADD TO
+                                            CART</span></button>
                                 </form>
                             </div>
                         </div>
                         <div class="pi-text">
-                            <h6>{{ $p->price }}đ</h6>
+                            <h6> {{ $p->price }}đ</h6>
                             <a href="{{ route('single-product', $p->slug) }}">
                                 <p>{{ $p->name }}</p>
                             </a>
@@ -126,7 +130,7 @@
     <section class="product-filter-section">
         <div class="container">
             <div class="section-title">
-                <h3>CÁC SẢN PHẨM BÁN CHẠY NHẤT</h3>
+                <h3>BROWSE TOP SELLING PRODUCTS</h3>
             </div>
             <ul class="product-filter-menu">
                 @foreach ($categories as $cat)
@@ -139,10 +143,10 @@
                         <div class="product-item">
                             <div class="pi-pic">
                                 @if ($p->on_sale == 1)
-                                    <div class="tag-sale">ĐANG GIẢM GIÁ</div>
+                                    <div class="tag-sale">ON SALE</div>
                                 @endif
                                 @if ($p->is_new == 1)
-                                    <div class="tag-new">Mới</div>
+                                    <div class="tag-new">New</div>
                                 @endif
                                 <a href="{{ route('single-product', $p->slug) }}">
                                     <a href="{{ route('single-product', $p->slug) }}">
@@ -160,15 +164,13 @@
                                         <input type="hidden" name="name" value="{{ $p->name }}">
                                         <input type="hidden" name="price" value="{{ $p->price }}">
                                         <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="add-card">
-                                            <i class="flaticon-bag"></i>
-                                            <span>Thêm vào giỏ</span>
-                                        </button>
+                                        <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>ADD TO
+                                                CART</span></button>
                                     </form>
                                 </div>
                             </div>
                             <div class="pi-text">
-                                <h6> {{ $p->price }}đ</h6>
+                                <h6>{{ $p->price }}đ</h6>
                                 <p> {{ $p->name }} </p>
                             </div>
                         </div>
@@ -177,10 +179,11 @@
             </div>
             @if ($products->count() > 8)
                 <div class="text-center pt-5">
-                    <a href="{{ route('frontendCategories') }}" class="site-btn sb-line sb-dark">XEM THÊM</a>
+                    <a href="{{ route('frontendCategories') }}" class="site-btn sb-line sb-dark">VIEW MORE</a>
                 </div>
             @endif
         </div>
     </section>
     <!-- Product filter section end -->
+
 @endsection

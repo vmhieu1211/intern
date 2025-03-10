@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
- use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,15 +28,9 @@ class SlideController extends Controller
 
         Slide::create([
             'image' => $image,
-            'heading' => $request->heading,
-            'description' => $request->description,
-            'link' => $request->link,
-            'from_price' => $request->from_price,
         ]);
 
-        session()->flash('success', 'Slider added successfully');
-
-        return redirect(route('slides.index'));
+        return redirect()->route('slides.index')->with('success', 'Slider added successfully');
     }
     public function edit($id)
     {
@@ -50,30 +44,18 @@ class SlideController extends Controller
         $slide = Slide::findOrFail($id);
 
         if ($request->hasFile('image')) {
-           Storage::disk('public')->delete($slide->image);
+            Storage::disk('public')->delete($slide->image);
 
-           $image = $request->image->store('uploads/slides', 'public');
-
+            $image = $request->image->store('uploads/slides', 'public');
         }
 
         $slide->update([
             'image' => $image ?? $slide->image,
-            'description' => $request->description,
-            'link' => $request->link,
-            'from_price' => $request->from_price,
         ]);
 
-        session()->flash('success', 'Slider updated successfully');
-
-        return redirect(route('slides.index'));
+        return redirect()->route('slides.index')->with('success', 'Slider updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $slide = Slide::findOrFail($id);
@@ -82,8 +64,6 @@ class SlideController extends Controller
 
         $slide->delete();
 
-        session()->flash('success', 'Slider deleted successfully');
-
-        return redirect(route('slides.index'));
+        return redirect()->route('slides.index')->with('success', 'Slider deleted successfully');
     }
 }
