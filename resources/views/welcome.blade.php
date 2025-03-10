@@ -12,17 +12,7 @@
     @if ($slides->count() > 0)
         <!-- Hero section -->
         <section class="hero-section">
-            {{-- <div class="hero-slider owl-carousel">
-                @foreach ($slides as $slide)
-                    <div class="hs-item set-bg" data-setbg="">
-
-                    </div>
-                @endforeach
-            </div>
-            <div class="container">
-                <div class="slide-num-holder" id="snh-1"></div>
-            </div> --}}
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -44,9 +34,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </section>
-
-        <!-- Hero section end -->
+            <!-- Hero section end -->
     @endif
 
     <!-- Features section -->
