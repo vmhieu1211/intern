@@ -4,7 +4,7 @@
         <span><i class="flaticon-search"></i></span>
     </div>
 
-    @if (strlen($search) > 2)
+    @if (strlen($search) > 0)
         <div class="position-absolute bg-light header-search-result" style="z-index: 1000;">
             @if (count($searchResults) > 0)
                 <ul class="sub-menu" style="list-style: none;">
