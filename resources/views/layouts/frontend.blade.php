@@ -1,28 +1,22 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     @yield('seo')
     <!-- Favicon -->
     <link href="/storage/{{ $shareSettings->favicon }}" rel="shortcut icon" />
-
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
-
-
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('frontend/css/all.css') }}" />
-
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}" />
     <!-- font-owesome icons link -->
     <link href="{{ asset('frontend/fontawesome/css/all.css') }}" rel="stylesheet">
-
-    <livewire:styles />
+    @livewireStyles
     @yield('css')
 </head>
 
 <body>
-
     <!-- Header section -->
     <header class="header-section">
         <div class="header-top">
@@ -35,7 +29,7 @@
                         </a>
                     </div>
                     <!-- search area -->
-                    <livewire:search-dropdown>
+                    <livewire:search-client>
                         <div class="col-xl-4 col-lg-5">
                             <div class="user-panel">
                                 <div class="up-item">
@@ -50,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <livewire:nav-bar>
+        <livewire:nav-bar />
     </header>
     <!-- Header section end -->
 
@@ -58,27 +52,27 @@
 
 
     <!-- Footer section -->
-    <livewire:footer-detail>
-        <!-- Footer section end -->
+    <livewire:footer-detail />
+    <!-- Footer section end -->
 
-        <!--====== Javascripts & Jquery ======-->
-        <livewire:scripts />
-        <script src="{{ asset('frontend/js/all.js') }}"></script>
+    <!--====== Javascripts & Jquery ======-->
+    @livewireScripts
+    <script src="{{ asset('frontend/js/all.js') }}"></script>
 
-        <script src="{{ asset('js/toastr.js') }}"></script>
-        <script>
-            @if (Session::has('success'))
-                toastr.success("{{ Session::get('success') }}")
-            @endif
-        </script>
+    <script src="{{ asset('js/toastr.js') }}"></script>
+    <script>
+        @if (Session::has('success'))
+            toastr.success("{{ Session::get('success') }}")
+        @endif
+    </script>
 
-        <script>
-            @if (Session::has('error'))
-                toastr.error("{{ Session::get('error') }}")
-            @endif
-        </script>
+    <script>
+        @if (Session::has('error'))
+            toastr.error("{{ Session::get('error') }}")
+        @endif
+    </script>
 
-        @yield('scripts')
+    @yield('scripts')
 
 </body>
 

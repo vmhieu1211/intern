@@ -3,10 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Product;
-use Livewire\Component;
 use App\Models\SystemSetting;
+use Livewire\Component;
 
-class SearchDropdown extends Component
+class SearchClient extends Component
 {
     public $search = '';
 
@@ -16,13 +16,13 @@ class SearchDropdown extends Component
 
         if (strlen($this->search) > 2) {
 
-            $searchResults = Product::with('category')->where('name', 'Like', '%' . $this->search . '%')->get();
-        }
+            $searchResults = Product::with('category')->where('name', 'like', '%' . $this->search . '%')->get();
+        }   
 
         $searchResults = collect($searchResults)->take(7);
 
         $systemName = SystemSetting::first();
 
-        return view('livewire.search-dropdown', compact('searchResults', 'systemName'));
+        return view('livewire.search-client', compact('searchResults', 'systemName'));
     }
 }

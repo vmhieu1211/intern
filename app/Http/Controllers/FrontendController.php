@@ -16,21 +16,16 @@ use App\Http\Controllers\Controller;
 class FrontendController extends Controller
 {
     // Returns the platform welcome or landing page
-    public function index(Request $request)
+    public function index()
     {
-        $query = $request->input('search');
+        $categories = Category::all();
+
+        $products = Product::orderBy('created_at', 'DESC')->with('category', 'photos')->paginate(8); 
+
         $slides = Slide::all();
 
-        $categories = Category::all();
-        $products = Product::orderBy('created_at', 'DESC')
-            ->with('category', 'photos')
-            ->when($query, function ($q) use ($query) {
-                $q->where('name', 'LIKE', '%' . $query . '%')
-                    ->orWhere('code', 'LIKE', '%' . $query . '%')
-                    ->orWhere('description', 'LIKE', '%' . $query . '%');
-            })
-            ->paginate(8);
-        return view('welcome', compact('products', 'categories', 'slides'));
+
+        return view('welcome', compact('products', 'slides', 'categories'));
     }
 
     // show single product details
