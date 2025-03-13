@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="pi-text">
-                                <h6>${{ $p->price }}</h6>
+                                <h6> {{ $p->price }}đ</h6>
                                 <p>{{ $p->name }}</p>
                             </div>
                         </div>
@@ -160,10 +160,10 @@
         }
     </script>
     <!--Load the API from the specified URL
-            * The async attribute allows the browser to render the page while the API loads
-            * The key parameter will contain your own API key (which is not needed for this tutorial)
-            * The callback parameter executes the initMap() function
-            -->
+                * The async attribute allows the browser to render the page while the API loads
+                * The key parameter will contain your own API key (which is not needed for this tutorial)
+                * The callback parameter executes the initMap() function
+                -->
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
     </body>
 

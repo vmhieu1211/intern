@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                     <div class="pi-text">
-                                        <h6>${{ $p->price }}</h6>
+                                        <h6> {{ $p->price }}đ</h6>
                                         <p>{{ $p->name }}</p>
                                     </div>
                                 </div>

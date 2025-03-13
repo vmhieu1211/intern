@@ -60,14 +60,8 @@
                 </div>
                 <div class="col-lg-6 product-details">
                     <h2 class="p-title">{{ $product->name }}</h2>
-                    <h3 class="p-price">${{ $product->price }}</h3>
-                    {{-- @if ($pieces)
-                        <h4 class="p-stock">Mảnh ghép:
-                            <span>
-                                {{ $pieces->attribute_value }}
-                            </span>
-                        </h4>
-                    @endif --}}
+                    <h3 class="p-price"> {{ $product->price }}đ</h3>
+
                     <h4 class="p-stock">Có sẵn:
                         <span>
                             @if ($product->inStock())
@@ -189,7 +183,7 @@
                             </div>
                         </div>
                         <div class="pi-text">
-                            <h6>${{ $related->price }}</h6>
+                            <h6> {{ $related->price }}đ</h6>
                             <p>{{ $related->name }} </p>
                         </div>
                     </div>

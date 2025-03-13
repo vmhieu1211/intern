@@ -28,7 +28,7 @@
                                     <tr>
                                         <th class="product-th">Sản phẩm</th>
                                         <th class="quy-th"> Số lượng</th>
-                                        <th class="total-th">Giá </th>
+                                        {{-- <th class="total-th">Giá </th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,9 +65,9 @@
                                                 </div>
 
                                             </td>
-                                            <td class="total-col">
+                                            {{-- <td class="total-col">
                                                 <h4>{{ $item->subtotal }}đ</h4>
-                                            </td>
+                                            </td> --}}
                                             <td class="total-col">
                                                 <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
                                                     @csrf
