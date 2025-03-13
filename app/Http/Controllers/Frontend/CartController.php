@@ -65,6 +65,10 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::remove($id);
+        // Check if the cart is empty or if the coupon should be removed
+        if (Cart::count() == 0 || (session()->has('coupon') && Cart::subtotal() < session('coupon')['minimum_amount'])) {
+            session()->forget('coupon'); // Remove the coupon from the session
+        }
         return redirect()->back()->with('success', "Item removed successfully!");
     }
 }

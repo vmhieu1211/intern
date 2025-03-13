@@ -28,7 +28,7 @@
                                     <tr>
                                         <th class="product-th">Sản phẩm</th>
                                         <th class="quy-th"> Số lượng</th>
-                                        {{-- <th class="total-th">Giá </th> --}}
+                                        <th class="total-th">Giá </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,9 +65,9 @@
                                                 </div>
 
                                             </td>
-                                            {{-- <td class="total-col">
-                                                <h4>{{ $item->subtotal }}đ</h4>
-                                            </td> --}}
+                                            <td class="total-col">
+                                                <h4>{{ number_format($item->subtotal, 3) }}đ</h4>
+                                            </td>
                                             <td class="total-col">
                                                 <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
                                                     @csrf
@@ -128,7 +128,7 @@
     <!-- cart section end -->
 
     <!-- Related product section -->
-    {{-- <section class="related-product-section">
+    <section class="related-product-section">
         <div class="container">
             <div class="section-title text-uppercase">
                 <h2>Có thể bạn cũng thích</h2>
@@ -161,11 +161,11 @@
                                         <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>THÊM VÀO
                                                 GIỎ HÀNG</span></button>
                                     </form>
-                                  
+
                                 </div>
                             </div>
                             <div class="pi-text">
-                                <h6>${{ $like->price }}</h6>
+                                <h6>{{ $like->price }}đ</h6>
                                 <p>{{ $like->name }}</p>
                             </div>
                         </div>
@@ -173,6 +173,6 @@
                 @endforeach
             </div>
         </div>
-    </section> --}}
+    </section>
     <!-- Related product section end -->
 @endsection
