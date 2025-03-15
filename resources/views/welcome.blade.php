@@ -38,11 +38,8 @@
             </div>
         </section>
         <!-- Hero section end -->
-
-
-
         <!-- Features section -->
-        <section class="features-section">
+        {{-- <section class="features-section">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4 p-0 feature">
@@ -71,7 +68,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Features section end -->
     @endif
 
@@ -80,7 +77,7 @@
     <section class="top-letest-product-section">
         <div class="container">
             <div class="section-title">
-                <h3>LATEST PRODUCTS</h3>
+                <h3>Sản phẩm nổi bật</h3>
             </div>
             <div class="product-slider owl-carousel">
                 @foreach ($products as $p)
@@ -106,8 +103,7 @@
                                     <input type="hidden" name="name" value="{{ $p->name }}">
                                     <input type="hidden" name="price" value="{{ $p->price }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>ADD TO
-                                            CART</span></button>
+                                    <button type="submit" class="add-card"><i class="flaticon-bag"></i></button>
                                 </form>
                             </div>
                         </div>
@@ -130,7 +126,7 @@
     <section class="product-filter-section">
         <div class="container">
             <div class="section-title">
-                <h3>BROWSE TOP SELLING PRODUCTS</h3>
+                <h3>Danh mục sản phẩm</h3>
             </div>
             <ul class="product-filter-menu">
                 @foreach ($categories as $cat)

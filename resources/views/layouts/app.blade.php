@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Admin Dashboard</title>
 
     <!-- font-owesome icons link -->
     <link href="{{ asset('frontend/fontawesome/css/all.css') }}" rel="stylesheet">
@@ -31,8 +31,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top shadow-sm border-bottom">
             <div class="container">
                 <a class="navbar-brand text-light" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                    Admin Dashboard </a>
 
                 <a href="{{ url('/') }}" target="_blank" class="btn btn-success align-content-center"
                     style="outline: none; border: none; background-color: #fff; color: #000; margin-left: 50%;">Xem Giao
@@ -59,8 +58,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link  text-light"
-                                        href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link  text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
