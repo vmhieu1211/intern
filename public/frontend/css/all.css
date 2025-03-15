@@ -19086,3 +19086,17 @@ ol {
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
 }
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  max-height: 500px; /* Adjust as needed */
+  object-fit: contain; /* Ensures the full image is visible without cropping */
+  background-color: #fff; /* Adds a background in case of empty space */
+}
+
+@media (max-width: 768px) {
+  .carousel-item img {
+      max-height: 300px;
+  }
+}
