@@ -5,12 +5,12 @@
         <div class="img-left d-none d-md-flex"></div>
 
         <div class="card-body">
-            <h4 class="title text-center mt-2 mb-3">Reset Password</h4>
+            <h4 class="title text-center mt-2 mb-3">Đặt lại mật khẩu</h4>
             <form class="form-box px-3"method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <div class="form-input">
                     <span><i class="fa fa-envelope"></i></span>
-                    <input type="email" name="email" placeholder="Email Address" tabindex="10"
+                    <input type="email" name="email" placeholder="Email" tabindex="10"
                         class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
                         required>
 
@@ -22,12 +22,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-block">Send Password Reset Link</button>
+                    <button type="submit" class="btn btn-block">Gửi Email</button>
                 </div>
 
                 <div class="text-center mb-2">
-                    Don't have an account?
-                    <a href="{{ route('register') }}" class="register-link">Register Here</a>
+                    Chưa có tài khoản?
+                    <a href="{{ route('register') }}" class="register-link">Đăng ký tại đây</a>
                 </div>
             </form>
         </div>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -93,7 +94,7 @@
                         <ul class="list-group">
 
                             <li class="list-group-item bg-primary border-white">
-                                <a href="{{ route('orders.index') }}" class="text-decoration-none text-light">Đặt
+                                <a href="{{ route('orders.index') }}" class="text-decoration-none text-light">Đơn
                                     hàng</a>
                             </li>
 

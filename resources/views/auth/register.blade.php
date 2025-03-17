@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="card col-lg col-xl-9 flex-row mx-auto px-0">
-        <div class="img-left d-none d-md-flex"></div>
+        {{-- <div class="img-left d-none d-md-flex"></div> --}}
 
         <div class="card-body">
             <h4 class="title text-center mt-2 mb-3">Tạo tài khoản</h4>

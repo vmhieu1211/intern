@@ -19090,7 +19090,7 @@ ol {
 .carousel-item img {
   width: 100%;
   height: auto;
-  max-height: 500px;
+  max-height: 250px;
   /* Adjust as needed */
   object-fit: contain;
   /* Ensures the full image is visible without cropping */

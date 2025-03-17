@@ -77,7 +77,7 @@
     <section class="top-letest-product-section">
         <div class="container">
             <div class="section-title">
-                <h3>Sản phẩm nổi bật</h3>
+                <h3 style="background : #ebebeb">Sản phẩm nổi bật</h3>
             </div>
             <div class="product-slider owl-carousel">
                 @foreach ($products as $p)
@@ -126,7 +126,7 @@
     <section class="product-filter-section">
         <div class="container">
             <div class="section-title">
-                <h3>Danh mục sản phẩm</h3>
+                <h3 style="background : #ebebeb">Danh mục sản phẩm</h3>
             </div>
             <ul class="product-filter-menu">
                 @foreach ($categories as $cat)
