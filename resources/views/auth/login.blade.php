@@ -17,7 +17,7 @@
 
                 <div class="form-input">
                     <span><i class="fa fa-envelope"></i></span>
-                    <input type="email" name="email" placeholder="Email Address"
+                    <input type="email" name="email" placeholder="Email"
                         class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
 
                     @error('email')
@@ -29,7 +29,7 @@
 
                 <div class="form-input">
                     <span><i class="fa fa-key"></i></span>
-                    <input type="password" name="password" placeholder="Password"
+                    <input type="password" name="password" placeholder="Mật khẩu"
                         class="form-control @error('password') is-invalid @enderror" required
                         autocomplete="current-password">
 

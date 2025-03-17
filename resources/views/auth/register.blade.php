@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 @section('css')
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    {{-- <script src='https://www.google.com/recaptcha/api.js'></script> --}}
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                 @csrf
                 <div class="form-input">
                     <span><i class="fa fa-user"></i></span>
-                    <input name="name" type="text" placeholder="Name"
+                    <input name="name" type="text" placeholder="Họ tên"
                         class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
 
                     @error('name')
@@ -32,7 +32,7 @@
 
                 <div class="form-input">
                     <span><i class="fa fa-envelope"></i></span>
-                    <input name="email" type="email" placeholder="Email Address"
+                    <input name="email" type="email" placeholder="Email"
                         class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
 
                     @error('email')
@@ -44,7 +44,7 @@
 
                 <div class="form-input">
                     <span><i class="fa fa-key"></i></span>
-                    <input type="password" name="password" placeholder="Password"
+                    <input type="password" name="password" placeholder="Mật khẩu"
                         class="form-control @error('password') is-invalid @enderror" required>
 
                     @error('password')
@@ -56,7 +56,7 @@
 
                 <div class="form-input">
                     <span><i class="fa fa-key"></i></span>
-                    <input type="password" name="password_confirmation" placeholder="Confirm Password"
+                    <input type="password" name="password_confirmation" placeholder="Nhập lại mật khẩu"
                         class="form-control @error('password_confirmation') is-invalid @enderror">
 
                     @error('password_confirmation')
@@ -69,22 +69,6 @@
                 <div class="mb-3">
                     <button type="submit" class="btn btn-block">Đăng ký</button>
                 </div>
-
-                <div class="text-center mb-3">
-                    hoặc đăng ký với
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <a href="/login/facebook" class="btn btn-block btn-social btn-facebook">Facebook</a>
-                    </div>
-                    <div class="col-6">
-                        <a href="/login/google" class="btn btn-block btn-social btn-google">Google</a>
-                    </div>
-                </div>
-
-                <hr class="my-4">
-                </hr>
 
                 <div class="text-center mb-2">
                     Đã có tài khoản?

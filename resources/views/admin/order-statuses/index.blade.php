@@ -15,13 +15,15 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between btn-sm">
             <span>Order Status</span>
-            <a href="{{ route('order-statuses.create') }}" class="btn btn-dark">Create Order Status</a>
+            <a href="{{ route('order-statuses.create') }}" class="btn btn-dark">Tạo trạng thái đơn hàng</a>
         </div>
         <div class="card-body">
             <table class="table table-dark table-bordered">
                 <thead>
-                    <th>name</th>
+                    <th>Tên</th>
                     <th>Identify Name</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
                 </thead>
                 <tbody>
                     @foreach ($orderStatuses as $status)

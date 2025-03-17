@@ -13,9 +13,9 @@
     </nav>
 
     <div class="card">
-        <div class="card-header">Role
-            <a href="{{ route('roles.create') }}" class="btn btn-dark">Add Role</a>
-
+        <div class="card-header d-flex justify-content-between btn-sm">
+            <span>Vai trò</span>
+            <a href="{{ route('roles.create') }}" class="btn btn-dark">Tạo vai trò</a>
         </div>
         <div class="card-body">
             <table class="table table-dark table-bordered table-hover">

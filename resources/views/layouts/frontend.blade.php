@@ -6,7 +6,6 @@
     <!-- Favicon -->
     <link href="/storage/{{ $shareSettings->favicon }}" rel="shortcut icon" />
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('frontend/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}" />
@@ -47,9 +46,7 @@
         <livewire:nav-bar />
     </header>
     <!-- Header section end -->
-
     @yield('content')
-
 
     <!-- Footer section -->
     <livewire:footer-detail />
@@ -71,9 +68,7 @@
             toastr.error("{{ Session::get('error') }}")
         @endif
     </script>
-
     @yield('scripts')
-
 </body>
 
 </html>
