@@ -6,9 +6,9 @@
 
         <ol class="breadcrumb">
             <a href="{{ route('home') }}" class="text-decoration-none mr-3">
-                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Trang chủ</li>
             </a>
-            <li class="breadcrumb-item active">Products</li>
+            <li class="breadcrumb-item active">Slides</li>
         </ol>
 
     </nav>
@@ -17,30 +17,28 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <span>Slides</span>
-            <a href="{{ route('slides.create') }}" class="btn btn-dark">Add Slide</a>
+            <a href="{{ route('slides.create') }}" class="btn btn-dark">Thêm Slide</a>
         </div>
         <div class="card-body">
             <table class="table table-dark table-bordered">
                 <thead>
-                     <th>Image</th>
-                     <th>Edit</th>
-                    <th>Delete</th>
-                </thead>
+                    <th>Hình ảnh</th>
+                    <th>Hành động</th>
+                 </thead>
                 <tbody>
                     @foreach ($slides as $slide)
                         <tr>
                             <td>
                                 <img src="/storage/{{ $slide->image }}"
-                                    style="border-radius: 100%; width: 25px; height: 25px;">
+                                    style="border-radius: 100%; width: 100px; height: 100px;">
                             </td>
                             <td>
-                                <a href="{{ route('slides.edit', $slide->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('slides.destroy', $slide->id) }}" method="post">
+                                <a href="{{ route('slides.edit', $slide->id) }}" class="btn btn-primary btn-sm">Sửa</a>
+                                <form action="{{ route('slides.destroy', $slide->id) }}" method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                                 </form>
                             </td>
                         </tr>

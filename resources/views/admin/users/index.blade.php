@@ -5,16 +5,16 @@
 
         <ol class="breadcrumb">
             <a href="{{ route('home') }}" class="text-dectoration-none mr-3">
-                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Trang chủ</li>
             </a>
-            <li class="breadcrumb-item active">User</li>
+            <li class="breadcrumb-item active">Người dùng</li>
         </ol>
 
     </nav>
 
     <div class="card">
-        <div class="card-header">Platform Users
-            <a href="{{ route('users.create') }}" class="btn btn-dark">Add User</a>
+        <div class="card-header">
+            <a href="{{ route('users.create') }}" class="btn btn-dark">Thêm người dùng</a>
 
         </div>
         <div class="card-body">
@@ -42,12 +42,12 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Sửa</a>
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                                 </form>
                             </td>
                         </tr>

@@ -20,20 +20,20 @@
         <div class="card-body">
             <table class="table table-dark table-bordered table-hover">
                 <thead>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th>Vai trò</th>
+                    <th>Hành động</th>
                 </thead>
                 <tbody>
                     @foreach ($roles as $role)
                         <tr>
                             <td>{{ $role->name }}</td>
                             <td>
-                                <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">Sửa</a>
                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                                 </form>
                             </td>
                         </tr>
