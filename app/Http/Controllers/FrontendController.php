@@ -15,12 +15,11 @@ use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
 {
-    // Returns the platform welcome or landing page
     public function index()
     {
         $categories = Category::all();
 
-        $products = Product::orderBy('created_at', 'DESC')->with('category', 'photos')->paginate(8); 
+        $products = Product::orderBy('created_at', 'DESC')->with('category', 'photos')->paginate(8);
 
         $slides = Slide::all();
 
@@ -28,7 +27,6 @@ class FrontendController extends Controller
         return view('welcome', compact('products', 'slides', 'categories'));
     }
 
-    // show single product details
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->with('photos')->firstOrFail();
@@ -42,7 +40,6 @@ class FrontendController extends Controller
         return view('client.product.show', compact('product', 'relatedProducts', 'singleImage', 'shareSettings'));
     }
 
-    // Get contact us page
     public function contact()
     {
         $info = SystemSetting::first();
@@ -52,10 +49,8 @@ class FrontendController extends Controller
         return view('contact', compact('info', 'products', 'shareSettings'));
     }
 
-    //send message from contact us
     public function contactStore(Request $request)
     {
-        // Validate contact info
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -63,7 +58,6 @@ class FrontendController extends Controller
             'message' => 'required',
         ]);
 
-        // Save contact info
         Contact::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -74,7 +68,6 @@ class FrontendController extends Controller
         return redirect()->back()->with('success', "Hey $request->name, thanks for reaching out we will get back to you withinn 24 hours");
     }
 
-    // display all categories and products
     public function categories()
     {
         $products = Product::orderBy('created_at', 'DESC')->with('photos')->paginate(12);
@@ -88,7 +81,6 @@ class FrontendController extends Controller
         return view('categories', compact('products', 'category', 'systemInfo', 'shareSettings'));
     }
 
-    // diplay a single category and its products
     public function category($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
@@ -100,7 +92,6 @@ class FrontendController extends Controller
         return view('category', compact('category', 'categories', 'products'));
     }
 
-    // diplay a single subcategory and its products
     public function subcategory($slug)
     {
         $subCategory = SubCategory::where('slug', $slug)->firstOrFail();
@@ -112,11 +103,9 @@ class FrontendController extends Controller
         return view('sub-category', compact('products', 'categories', 'subCategory'));
     }
 
-    // return products on sale
     public function onSale()
     {
         $products = Product::where('on_sale', 1)->with('photos')->paginate(12);
-
         $categories = Category::with('subcategories')->get();
         $shareSettings = SystemSetting::first();
 
