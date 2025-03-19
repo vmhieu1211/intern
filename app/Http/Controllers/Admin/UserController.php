@@ -55,7 +55,7 @@ class UserController extends Controller
         ]);
 
         $data = $request->only('name', 'email');
-        
+
         if ($request->filled('password')) {
             $data['password'] = bcrypt($request->password);
         }
