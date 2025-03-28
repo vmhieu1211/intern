@@ -101,24 +101,4 @@ class CheckoutController extends Controller
             'newTotal' => $newTotal,
         ]);
     }
-
-    public function stripe(): View
-    {
-        return view('stripe');
-    }
-
-    public function stripePost(Request $request): RedirectResponse
-    {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        Stripe\Charge::create([
-            "amount" => 10 * 100,
-            "currency" => "USD",
-            "source" => $request->stripeToken,
-            "description" => "Payment"
-        ]);
-
-        return back()
-            ->with('success', 'Payment successful!');
-    }
 }
