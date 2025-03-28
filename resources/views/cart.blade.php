@@ -32,32 +32,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (session('cart', []) as $item)
-                                        @php
-                                            $product = \App\Models\Product::find($item['id']); // Fetch product details from the database
-                                        @endphp
+                                    @foreach (Cart::content() as $item)
                                         <tr>
                                             <td class="product-col">
-                                                <a href="{{ route('single-product', $product->slug) }}">
-                                                    @if ($product->photos->count() > 0)
-                                                        <img src="/storage/{{ $product->photos->first()->images }}"
+                                                <a href="{{ route('single-product', $item->model->slug) }}">
+                                                    @if ($item->model->photos->count() > 0)
+                                                        <img src="/storage/{{ $item->model->photos->first()->images }}"
                                                             alt="">
                                                     @else
                                                         <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
                                                     @endif
                                                 </a>
                                                 <div class="pc-title">
-                                                    <h4>{{ $product->name }}</h4>
+                                                    <h4>{{ $item->model->name }}</h4>
+                                                    {{-- <p> {{ $item->model->price }}đ</p> --}}
                                                 </div>
                                             </td>
                                             <td class="quy-col">
                                                 <div class="quantity">
-                                                    <form action="{{ route('cart.update', $item['id']) }}" method="post">
+                                                    <form action="{{ route('cart.update', $item->rowId) }}" method="post">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="pro-qty">
                                                             <input type="text" name="quantity"
-                                                                value="{{ $item['quantity'] }}">
+                                                                value="{{ $item->qty }}">
                                                         </div>
                                                         <button style="border: none;">
                                                             <i class="cancel fas fa-check ml-2" title="Update Product Qty"
@@ -65,13 +63,13 @@
                                                         </button>
                                                     </form>
                                                 </div>
+
                                             </td>
                                             <td class="total-col">
-                                                <h4>{{ number_format((float) ($item['price'] * $item['quantity']), 3, '.', ',') }}đ
-                                                </h4>
+                                                <h4>{{ number_format($item->subtotal, 3) }}đ</h4>
                                             </td>
                                             <td class="total-col">
-                                                <form action="{{ route('cart.destroy', $item['id']) }}" method="post">
+                                                <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button style="border: none;">
@@ -82,8 +80,30 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @if (session()->get('coupon') != null)
+                                        <tr>
+                                            <td>Mã giảm giá ({{ session()->get('coupon')['name'] }})</td>
+                                            <td>
+                                                <form action="{{ route('coupons.destroy') }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button style="border: none;">
+                                                        <i class="cancel fas fa-times" title="Remove coupon"
+                                                            style="cursor: pointer; color: #f51167;"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td></td>
+                                            <td>-{{ $discount }}đ </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Thành tiền</strong></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><strong> {{ $newSubtotal }}đ</strong></td>
+                                        </tr>
+                                    @endif
                                 </tbody>
-
                             </table>
                         </div>
                         <div class="total-cost">
