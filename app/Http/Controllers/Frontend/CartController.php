@@ -13,13 +13,12 @@ class CartController extends Controller
 
     public function index()
     {
-        // $this->cartService->clear();
+        // Cart::destroy();
         $systemInfo = SystemSetting::first();
-
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
-        $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
-        $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
-        $newTotal = number_format($newSubtotal, 3);
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $newSubtotal = Cart::subtotal() - $discount;
+        $newTotal = $newSubtotal;
         return view('cart', compact('mightAlsoLike', 'systemInfo'))->with([
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
