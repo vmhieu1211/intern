@@ -70,7 +70,7 @@
                                                 <h4>{{ number_format((float) ($item['price'] * $item['quantity']), 3, '.', ',') }}đ
                                                 </h4>
                                             </td>
-                                            <td class="total-col">  
+                                            <td class="total-col">
                                                 <form action="{{ route('cart.destroy', $item['id']) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
