@@ -23,7 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th class="size-col">Mã đơn hàng</th>
-                                        <th class="size-col">Số lượng</th>
+                                        <th class="size-col">Tổng tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,7 +33,7 @@
                                                 <h4>{{ $order->order_number }}</h4>
                                             </td>
                                             <td class="total-col">
-                                                <h4> {{ $order->billing_total }}đ</h4>
+                                                <h4> {{ number_format($order->billing_total) }}đ</h4>
                                             </td>
                                             <td>
                                                 <a href="{{ route('my-profile.show', $order->id) }}"

@@ -18,9 +18,9 @@ class CheckoutController extends Controller
     {
         $systemInfo = SystemSetting::first();
 
-        $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
-        $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
-        $newTotal = number_format($newSubtotal, 3);
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $newSubtotal = (float) str_replace(',', '', Cart::subtotal()) - $discount;
+        $newTotal = $newSubtotal;
 
         return view('checkout', compact('systemInfo'))->with([
             'discount' => $discount,
@@ -89,10 +89,10 @@ class CheckoutController extends Controller
 
     private function getNumbers()
     {
-        $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
+        $discount = session()->get('coupon')['discount'] ?? 0;
         $code = session()->get('coupon')['name'] ?? null;
-        $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
-        $newTotal = number_format($newSubtotal, 3);
+        $newSubtotal = (float) str_replace(',', '', Cart::subtotal()) - $discount;
+        $newTotal = $newSubtotal;
 
         return collect([
             'code' => $code,
@@ -100,25 +100,5 @@ class CheckoutController extends Controller
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
         ]);
-    }
-
-    public function stripe(): View
-    {
-        return view('stripe');
-    }
-
-    public function stripePost(Request $request): RedirectResponse
-    {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        Stripe\Charge::create([
-            "amount" => 10 * 100,
-            "currency" => "USD",
-            "source" => $request->stripeToken,
-            "description" => "Payment"
-        ]);
-
-        return back()
-            ->with('success', 'Payment successful!');
     }
 }

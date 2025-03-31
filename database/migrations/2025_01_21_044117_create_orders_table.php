@@ -16,12 +16,10 @@ return new class extends Migration
             $table->string('order_number');
             $table->integer('user_id')->nullable();
             $table->integer('order_status_id');
-            // $table->boolean('is_paid')->default(false);
             $table->enum('payment_method', ['cash_on_delivery', 'paynow', 'paypal', 'stripe', 'card'])->default('cash_on_delivery');
-
             $table->integer('billing_discount')->default(0);
             $table->string('billing_discount_code')->nullable();
-            $table->integer('billing_subtotal')->nullable();
+            $table->decimal('billing_subtotal', 8, 0)->nullable();
             $table->float('billing_total');
             $table->string('billing_fullname');
             $table->string('billing_address');

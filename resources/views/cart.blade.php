@@ -66,7 +66,7 @@
 
                                             </td>
                                             <td class="total-col">
-                                                <h4>{{ number_format($item->subtotal, 3) }}đ</h4>
+                                                <h4>{{ number_format($item->subtotal, 0) }}đ</h4>
                                             </td>
                                             <td class="total-col">
                                                 <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
@@ -94,20 +94,20 @@
                                                 </form>
                                             </td>
                                             <td></td>
-                                            <td>-{{ $discount }}đ </td>
+                                            <td>-{{ number_format($discount) }}đ </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Thành tiền</strong></td>
                                             <td></td>
                                             <td></td>
-                                            <td><strong> {{ $newSubtotal }}đ</strong></td>
+                                            <td><strong> {{ number_format($newSubtotal) }}đ</strong></td>
                                         </tr>
                                     @endif
                                 </tbody>
                             </table>
                         </div>
                         <div class="total-cost">
-                            <h6>Tổng <span> {{ number_format($newTotal, 3) }} đ</span></h6>
+                            <h6>Tổng <span> {{ number_format($newTotal) }} đ</span></h6>
                         </div>
                     </div>
                 </div>

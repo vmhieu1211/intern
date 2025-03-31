@@ -26,7 +26,7 @@
                                     <tr>
                                         <th class="product-th">Sản phẩm</th>
                                         <th class="size-th">Số lượng</th>
-                                        <th class="size-th">Mã</th>
+                                        <th class="size-th">Mã sản phẩm</th>
                                         <th class="total-th">Giá</th>
                                     </tr>
                                 </thead>
@@ -42,7 +42,7 @@
                                                 @endif --}}
                                                 <div class="pc-title">
                                                     <h4>{{ $p->name }}</h4>
-                                                    <p> {{ $p->price }}đ</p>
+                                                    <p> {{ number_format($p->price) }}đ</p>
                                                 </div>
                                             </td>
                                             <td class="size-col">
@@ -52,7 +52,7 @@
                                                 <h4>{{ $p->code }}</h4>
                                             </td>
                                             <td class="total-col">
-                                                <h4> {{ $p->price * $p->pivot->quantity }}.000đ</h4>
+                                                <h4> {{ number_format($p->price * $p->pivot->quantity) }}đ</h4>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -60,7 +60,7 @@
                             </table>
                         </div>
                         <div class="total-cost">
-                            <h6>Tổng đơn hàng <span> {{ $order->billing_total }}.000đ</span></h6>
+                            <h6>Tổng đơn hàng <span> {{ number_format($order->billing_total) }}đ</span></h6>
                         </div>
                     </div>
                 </div>
