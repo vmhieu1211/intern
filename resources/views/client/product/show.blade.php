@@ -22,7 +22,6 @@
     </div>
     <!-- Page info end -->
 
-
     <!-- product section -->
     <section class="product-section">
         <div class="container">
@@ -101,7 +100,6 @@
                             </div>
                         @endif
 
-
                         <div class="quantity">
                             <p>Số lượng</p>
                             <div class="pro-qty"><input type="text" name="quantity" value="1"></div>
@@ -133,24 +131,15 @@
                                 <div class="panel-body">
                                     <h4>Đổi hàng trong 7 ngày</h4>
                                     <p>Có dịch vụ thanh toán khi nhận hàng<br>Giao hàng tận nhà <span>3 - 4 ngày</span></p>
-                                    <p>{{-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec. --}}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="social-sharing">
-                        <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-pinterest"></i></a>
-                        <a href=""><i class="fa fa-facebook"></i></a>
-                        <a href=""><i class="fa fa-twitter"></i></a>
-                        <a href=""><i class="fa fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- product section end -->
-
 
     <!-- RELATED PRODUCTS section -->
     <section class="related-product-section">
@@ -192,5 +181,4 @@
         </div>
     </section>
     <!-- RELATED PRODUCTS section end -->
-
 @endsection
