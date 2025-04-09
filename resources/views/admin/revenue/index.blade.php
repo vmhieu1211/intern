@@ -17,19 +17,19 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>Daily Revenue</h4>
-                    <p>{{ number_format($dailyRevenue, 3) }}đ</p>
+                    <p>{{ number_format($dailyRevenue) }}đ</p>
                 </div>
             </div>
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>Monthly Revenue</h4>
-                    <p>{{ number_format($monthlyRevenue, 3) }} đ</p>
+                    <p>{{ number_format($monthlyRevenue) }} đ</p>
                 </div>
             </div>
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>Yearly Revenue</h4>
-                    <p>{{ number_format($yearlyRevenue, 3) }} đ</p>
+                    <p>{{ number_format($yearlyRevenue) }} đ</p>
                 </div>
             </div>
         </div>

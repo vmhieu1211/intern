@@ -10,22 +10,18 @@ use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
-        $shareSettings = SystemSetting::first(); // Get settings
+        $shareSettings = SystemSetting::first(); 
         View::share('shareSettings', $shareSettings);
-        $systemName = SystemSetting::first(); // Get settings
+        $systemName = SystemSetting::first(); 
         View::share('systemName', $systemName);
     }
 }
