@@ -4,69 +4,53 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
-use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Helpers\CartHelper;
+use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
-
     public function index()
     {
-        // Cart::destroy();
+        // session()->forget('coupon');
         $systemInfo = SystemSetting::first();
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
+        $cart = CartHelper::getCart();
         $discount = session()->get('coupon')['discount'] ?? 0;
-        $newSubtotal = (float) str_replace(',', '', Cart::subtotal()) - $discount;
+        $newSubtotal = CartHelper::getCartTotal() - $discount;
         $newTotal = $newSubtotal;
-        return view('cart', compact('mightAlsoLike', 'systemInfo'))->with([
-            'discount' => $discount,
-            'newSubtotal' => $newSubtotal,
-            'newTotal' => $newTotal,
-        ]);
+
+        return view('cart', compact('mightAlsoLike', 'systemInfo', 'cart', 'discount', 'newSubtotal', 'newTotal'));
     }
 
     public function store(Request $request)
     {
-        // Lấy sản phẩm từ cơ sở dữ liệu
         $product = Product::find($request->id);
 
-        // Kiểm tra số lượng sản phẩm có đủ không
         if ($product->quantity < $request->quantity) {
             return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
         }
 
-        // Thêm sản phẩm vào giỏ hàng
-        $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
-            return $cartItem->id === $request->id;
-        });
-
-        if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success', "$request->name đã có trong giỏ hàng!");
-        }
-
-        Cart::add($request->id, $request->name, $request->quantity, $request->price)
-            ->associate('App\Models\Product');
-
-        // Trừ số lượng sản phẩm trong kho
+        CartHelper::addToCart($product, $request->quantity);
         $product->decrement('quantity', $request->quantity);
 
-        return redirect()->route('cart.index')->with('success', "$request->name đã được thêm vào giỏ hàng!");
+        return redirect()->route('cart.index')->with('success', "$product->name đã được thêm vào giỏ hàng!");
     }
 
     public function update(Request $request, $id)
     {
-        Cart::update($id, $request->quantity);
+        CartHelper::updateCart($id, $request->quantity);
         return redirect()->route('cart.index')->with('success', "Item updated successfully!");
     }
 
     public function destroy($id)
     {
-        Cart::remove($id);
-        // Check if the cart is empty or if the coupon should be removed
-        if (Cart::count() == 0 || (session()->has('coupon') && Cart::subtotal() < session('coupon')['minimum_amount'])) {
-            session()->forget('coupon'); // Remove the coupon from the session
+        CartHelper::removeFromCart($id);
+
+        if (empty(CartHelper::getCart()) || (session()->has('coupon') && CartHelper::getCartTotal() < session('coupon')['minimum_amount'])) {
+            session()->forget('coupon');
         }
+
         return redirect()->back()->with('success', "Item removed successfully!");
     }
 }
