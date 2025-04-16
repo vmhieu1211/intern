@@ -46,16 +46,13 @@ class CartController extends Controller
             return redirect()->back()->with('error', "Sản phẩm không tồn tại.");
         }
     
-        // Kiểm tra nếu số lượng yêu cầu vượt quá số lượng trong kho
         if ($request->quantity > $product->quantity) {
             return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
         }
     
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] = $request->quantity;
-    
-            // Nếu số lượng <= 0, xóa sản phẩm khỏi giỏ hàng
-            if ($cart[$id]['quantity'] <= 0) {
+                if ($cart[$id]['quantity'] <= 0) {
                 unset($cart[$id]);
             }
         }
@@ -72,7 +69,6 @@ class CartController extends Controller
         if (empty(CartHelper::getCart()) || (session()->has('coupon') && CartHelper::getCartTotal() < session('coupon')['minimum_amount'])) {
             session()->forget('coupon');
         }
-
         return redirect()->back()->with('success', "Item removed successfully!");
     }
 }
