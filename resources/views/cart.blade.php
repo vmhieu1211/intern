@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="pi-text">
-                                <h6>{{ $like->price }}đ</h6>
+                                <h6>{{ number_format($like->price) }}đ</h6>
                                 <p>{{ $like->name }}</p>
                             </div>
                         </div>
