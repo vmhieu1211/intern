@@ -7,10 +7,6 @@ use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use App\Http\Controllers\Controller;
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Stripe;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class CheckoutController extends Controller
 {
@@ -18,21 +14,24 @@ class CheckoutController extends Controller
     {
         $systemInfo = SystemSetting::first();
 
+        // Lấy giỏ hàng từ session
+        $cart = session()->get('cart', []);
         $discount = session()->get('coupon')['discount'] ?? 0;
-        $newSubtotal = (float) str_replace(',', '', Cart::subtotal()) - $discount;
+
+        // Tính toán tổng tiền
+        $newSubtotal = array_reduce($cart, function ($total, $item) {
+            return $total + ($item['price'] * $item['quantity']);
+        }, 0) - $discount;
+
         $newTotal = $newSubtotal;
 
         return view('checkout', compact('systemInfo'))->with([
+            'cart' => $cart,
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
         ]);
     }
-
-    // public function create()
-    // {
-    //     return 'Create payment working';
-    // }
 
     public function store(Request $request)
     {
@@ -45,13 +44,14 @@ class CheckoutController extends Controller
             'notes' => 'max:255',
         ]);
 
+        // Tạo đơn hàng
         $order = Order::create([
             'order_number' => uniqid(),
             'user_id' => auth()->user()->id ?? null,
-            'billing_discount' => $this->getNumbers()->get('discount'),
-            'billing_discount_code' => $this->getNumbers()->get('code'),
-            'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
-            'billing_total' => $this->getNumbers()->get('newTotal'),
+            'billing_discount' => $this->getNumbers()['discount'],
+            'billing_discount_code' => session()->get('coupon')['name'] ?? null,
+            'billing_subtotal' => $this->getNumbers()['newSubtotal'],
+            'billing_total' => $this->getNumbers()['newTotal'],
             'billing_fullname' => $request->billing_fullname,
             'billing_address' => $request->billing_address,
             'billing_city' => $request->billing_city,
@@ -61,44 +61,51 @@ class CheckoutController extends Controller
             'notes' => $request->notes,
             'order_status_id' => $request->order_status_id ?? 1,
             'payment_method' => $request->payment_method,
-
         ]);
 
-        // update user info if user is authenticated
+        // Cập nhật thông tin người dùng nếu đã đăng nhập
         if (auth()->check()) {
             auth()->user()->update([
                 'phone' => $request->billing_phone,
                 'address' => $request->billing_address,
-                'city' => $request->billing_phone,
+                'city' => $request->billing_city,
                 'province' => $request->billing_province,
-                'notes' => $request->notes
+                'notes' => $request->notes,
             ]);
         }
 
-        foreach (Cart::content() as $item) {
+        // Lưu sản phẩm trong đơn hàng
+        $cart = session()->get('cart', []);
+        foreach ($cart as $item) {
             OrderProduct::create([
                 'order_id' => $order->id,
-                'product_id' => $item->model->id,
-                'quantity' => $item->qty,
+                'product_id' => $item['id'],
+                'quantity' => $item['quantity'],
             ]);
         }
-        //clear cart contents
-        Cart::destroy();
-        return redirect()->route('my-orders.index')->with('success', "Thank you $request->billing_fullname, your order has been placed successfully!");
+
+        // Xóa giỏ hàng sau khi đặt hàng
+        session()->forget('cart');
+        session()->forget('coupon');
+
+        return redirect()->route('my-orders.index')->with('success', "Cảm ơn $request->billing_fullname, đơn hàng của bạn đã được đặt thành công!");
     }
 
     private function getNumbers()
     {
+        $cart = session()->get('cart', []);
         $discount = session()->get('coupon')['discount'] ?? 0;
-        $code = session()->get('coupon')['name'] ?? null;
-        $newSubtotal = (float) str_replace(',', '', Cart::subtotal()) - $discount;
+
+        $newSubtotal = array_reduce($cart, function ($total, $item) {
+            return $total + ($item['price'] * $item['quantity']);
+        }, 0) - $discount;
+
         $newTotal = $newSubtotal;
 
-        return collect([
-            'code' => $code,
+        return [
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
-        ]);
+        ];
     }
 }

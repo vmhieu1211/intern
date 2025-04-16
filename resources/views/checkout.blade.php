@@ -70,18 +70,18 @@
                     <div class="checkout-cart">
                         <h3>Giỏ hàng</h3>
                         <ul class="product-list">
-                            @foreach (Cart::content() as $item)
+                            @foreach ($cart as $item)
                                 <li>
                                     <div class="pl-thumb">
-                                        @if ($item->model->photos->count() > 0)
-                                            <img src="/storage/{{ $item->model->photos->first()->images }}" alt="">
+                                        @if (!empty($item['image']))
+                                            <img src="/storage/{{ $item['image'] }}" alt="">
                                         @else
                                             <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
                                         @endif
                                     </div>
-                                    <h6>{{ $item->model->name }}</h6>
-                                    <p> {{ number_format($item->subtotal) }}đ </p>
-                                    <p>Số lượng {{ $item->qty }}</p>
+                                    <h6>{{ $item['name'] }}</h6>
+                                    <p>{{ number_format($item['price'] * $item['quantity']) }}đ</p>
+                                    <p>Số lượng: {{ $item['quantity'] }}</p>
                                 </li>
                             @endforeach
                         </ul>

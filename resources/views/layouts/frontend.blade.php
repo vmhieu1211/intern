@@ -34,7 +34,7 @@
                                 <div class="up-item">
                                     <div class="shopping-card">
                                         <i class="flaticon-bag"></i>
-                                        <span>{{ Cart::instance('default')->count() }}</span>
+                                        <span>{{ session()->has('cart') ? count(session('cart')) : 0 }}</span>
                                     </div>
                                     <a href="{{ route('cart.index') }}">Giỏ hàng</a>
                                 </div>

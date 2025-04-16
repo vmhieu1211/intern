@@ -39,8 +39,30 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
-        CartHelper::updateCart($id, $request->quantity);
-        return redirect()->route('cart.index')->with('success', "Item updated successfully!");
+        $cart = session()->get('cart', []);
+        $product = Product::find($id);
+    
+        if (!$product) {
+            return redirect()->back()->with('error', "Sản phẩm không tồn tại.");
+        }
+    
+        // Kiểm tra nếu số lượng yêu cầu vượt quá số lượng trong kho
+        if ($request->quantity > $product->quantity) {
+            return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
+        }
+    
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->quantity;
+    
+            // Nếu số lượng <= 0, xóa sản phẩm khỏi giỏ hàng
+            if ($cart[$id]['quantity'] <= 0) {
+                unset($cart[$id]);
+            }
+        }
+    
+        session()->put('cart', $cart);
+    
+        return redirect()->route('cart.index')->with('success', "Số lượng sản phẩm đã được cập nhật!");
     }
 
     public function destroy($id)
