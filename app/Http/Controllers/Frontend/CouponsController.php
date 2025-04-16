@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Gloudemans\Shoppingcart\Facades\Cart;
-
+ 
 class CouponsController extends Controller
 {
     public function store(Request $request)
@@ -14,16 +13,21 @@ class CouponsController extends Controller
         $coupon = Coupon::where('code', $request->coupon_code)->first();
 
         if (!$coupon) {
-            return redirect()->route('cart.index')->withErrors('Invalid coupon code. Please try agan.');
+            return redirect()->route('cart.index')->withErrors('Invalid coupon code. Please try again.');
         }
+
+        $cart = session()->get('cart', []);
+        $subtotal = array_reduce($cart, function ($total, $item) {
+            return $total + ($item['price'] * $item['quantity']);
+        }, 0);
 
         session()->put('coupon', [
             'name' => $coupon->code,
-            'discount' => $coupon->discount(Cart::subtotal()),
+            'discount' => $coupon->discount($subtotal),
         ]);
+
         return redirect()->route('cart.index')->with('success', 'Coupon applied successfully');
     }
-
 
     public function destroy()
     {
