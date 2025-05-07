@@ -23,7 +23,7 @@
                 <div class="carousel-inner">
                     @foreach ($slides as $index => $slide)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <img class="d-block w-100" src="/storage/{{ $slide->image }}" alt="Slide {{ $index + 1 }}">
+                            <img class="d-block w-100 lazyload" src="/storage/{{ $slide->image }}" alt="Slide {{ $index + 1 }}">
                         </div>
                     @endforeach
                 </div>
@@ -91,9 +91,9 @@
                             @endif
                             <a href="{{ route('single-product', $p->slug) }}">
                                 @if ($p->photos->count() > 0)
-                                    <img src="/storage/{{ $p->photos->first()->images }} " alt="">
+                                    <img class="lazyload" src="/storage/{{ $p->photos->first()->images }} " alt="">
                                 @else
-                                    <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
+                                    <img class="lazyload" src="{{ asset('frontend/img/no-image.png') }}" alt="">
                                 @endif
                             </a>
                             <div class="pi-links">
@@ -147,9 +147,11 @@
                                 <a href="{{ route('single-product', $p->slug) }}">
                                     <a href="{{ route('single-product', $p->slug) }}">
                                         @if ($p->photos->count() > 0)
-                                            <img src="/storage/{{ $p->photos->first()->images }} " alt="">
+                                            <img class="lazyload" src="/storage/{{ $p->photos->first()->images }} "
+                                                alt="">
                                         @else
-                                            <img src="{{ asset('frontend/img/no-image.png') }}" alt="">
+                                            <img class="lazyload" src="{{ asset('frontend/img/no-image.png') }}"
+                                                alt="">
                                         @endif
                                     </a>
                                 </a>

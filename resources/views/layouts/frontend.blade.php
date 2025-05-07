@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}" />
     <!-- font-owesome icons link -->
     <link href="{{ asset('frontend/fontawesome/css/all.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
     @livewireStyles
     @yield('css')
 </head>
