@@ -2,76 +2,58 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
-use App\Models\SystemSetting;
 use App\Models\Product;
-use App\Helpers\CartHelper;
+use App\Services\CartService;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
+    public function __construct(private CartService $cart) {}
+
     public function index()
     {
-        // session()->forget('coupon');
-        $systemInfo = SystemSetting::first();
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
-        $cart = CartHelper::getCart();
-        $discount = session()->get('coupon')['discount'] ?? 0;
-        $newSubtotal = CartHelper::getCartTotal() - $discount;
-        $newTotal = $newSubtotal;
 
-        return view('cart', compact('mightAlsoLike', 'systemInfo', 'cart', 'discount', 'newSubtotal', 'newTotal'));
+        return view('cart', [
+            'cart'        => $this->cart->get(),
+            'discount'    => $this->cart->discount(),
+            'newSubtotal' => $this->cart->subtotal(),
+            'newTotal'    => $this->cart->total(),
+            'mightAlsoLike' => $mightAlsoLike,
+        ]);
     }
 
     public function store(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::findOrFail($request->id);
 
         if ($product->quantity < $request->quantity) {
-            return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
+            return redirect()->back()->with('error', 'Không đủ số lượng sản phẩm trong kho.');
         }
 
-        CartHelper::addToCart($product, $request->quantity);
+        $this->cart->add($product, (int) $request->quantity);
 
         return redirect()->route('cart.index')->with('success', "$product->name đã được thêm vào giỏ hàng!");
     }
 
     public function update(Request $request, $id)
     {
-        $cart = session()->get('cart', []);
-        $product = Product::find($id);
-    
-        if (!$product) {
-            return redirect()->back()->with('error', "Sản phẩm không tồn tại.");
-        }
-    
+        $product = Product::findOrFail($id);
+
         if ($request->quantity > $product->quantity) {
-            return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
+            return redirect()->back()->with('error', 'Không đủ số lượng sản phẩm trong kho.');
         }
-    
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $request->quantity;
-                if ($cart[$id]['quantity'] <= 0) {
-                unset($cart[$id]);
-            }
-        }
-    
-        session()->put('cart', $cart);
-    
-        if (empty(CartHelper::getCart()) || CartHelper::getCartTotal() <= 0) {
-            session()->forget('coupon');
-        }
-    
-        return redirect()->route('cart.index')->with('success', "Số lượng sản phẩm đã được cập nhật!");
+
+        $this->cart->update((int) $id, (int) $request->quantity);
+
+        return redirect()->route('cart.index')->with('success', 'Số lượng sản phẩm đã được cập nhật!');
     }
 
     public function destroy($id)
     {
-        CartHelper::removeFromCart($id);
+        $this->cart->remove((int) $id);
 
-        if (empty(CartHelper::getCart()) || CartHelper::getCartTotal() <= 0) {
-            session()->forget('coupon');
-        }
-        return redirect()->back()->with('success', "Item removed successfully!");
+        return redirect()->back()->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
     }
 }

@@ -39,9 +39,9 @@
             <div class="row">
                 <div class="col-lg-6 contact-info">
                     <h3>Liên hệ với chúng tôi</h3>
-                    <p>{{ $info->address }}</p>
-                    <p>{{ $info->tel }}</p>
-                    <p>{{ $info->email }}</p>
+                    <p>{{ $shareSettings->address }}</p>
+                    <p>{{ $shareSettings->tel }}</p>
+                    <p>{{ $shareSettings->email }}</p>
                     <!-- flash success messages -->
                     @if (Session::has('success'))
                         <div class="alert alert-primary" role="alert">

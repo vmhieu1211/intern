@@ -24,14 +24,15 @@ class ProductRequest extends FormRequest
         $productId = $this->route('product') ? $this->route('product')->id : null;
 
         return [
-            'name' => 'required|unique:products,name,' . $productId . '|max:100',
-            'code' => 'required|unique:products,code,' . $productId . '|max:20',
-            'slug' => 'unique:products',
+            'name'        => 'required|unique:products,name,' . $productId . '|max:100',
+            'code'        => 'required|unique:products,code,' . $productId . '|max:20',
+            'slug'        => 'unique:products',
             'description' => 'required',
-            'images' => 'nullable|array',
-            'price' => 'required|numeric|gt:0',
-            'quantity' => 'required|numeric|integer',
-            'category_id' => 'required',
+            'images'      => 'nullable|array',
+            'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'price'       => 'required|numeric|gt:0',
+            'quantity'    => 'required|numeric|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

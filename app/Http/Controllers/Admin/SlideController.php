@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SlideRequest;
 use App\Models\Slide;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
 {
-
     public function index()
     {
-        $slides = Slide::all();
-
-        return view('admin.slides.index', compact('slides'));
+        return view('admin.slides.index', ['slides' => Slide::all()]);
     }
 
     public function create()
@@ -22,52 +19,40 @@ class SlideController extends Controller
         return view('admin.slides.create');
     }
 
-    public function store(Request $request)
+    public function store(SlideRequest $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
-        ]);
-
         $image = $request->file('image')->store('uploads/slides', 'public');
 
-        Slide::create([
-            'image' => $image,
-        ]);
+        Slide::create(['image' => $image]);
 
-        return redirect()->route('slides.index')->with('success', 'Slider added successfully');
+        return redirect()->route('slides.index')->with('success', 'Thêm slide thành công!');
     }
+
     public function edit($id)
     {
-        $slide = Slide::findOrFail($id);
-
-        return view('admin.slides.create', compact('slide'));
+        return view('admin.slides.create', ['slide' => Slide::findOrFail($id)]);
     }
 
-    public function update(Request $request, $id)
+    public function update(SlideRequest $request, $id)
     {
         $slide = Slide::findOrFail($id);
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($slide->image);
-
-            $image = $request->image->store('uploads/slides', 'public');
+            $slide->image = $request->file('image')->store('uploads/slides', 'public');
         }
 
-        $slide->update([
-            'image' => $image ?? $slide->image,
-        ]);
+        $slide->save();
 
-        return redirect()->route('slides.index')->with('success', 'Slider updated successfully');
+        return redirect()->route('slides.index')->with('success', 'Cập nhật slide thành công!');
     }
 
     public function destroy($id)
     {
         $slide = Slide::findOrFail($id);
-
         Storage::disk('public')->delete($slide->image);
-
         $slide->delete();
 
-        return redirect()->route('slides.index')->with('success', 'Slider deleted successfully');
+        return redirect()->route('slides.index')->with('success', 'Xóa slide thành công!');
     }
 }

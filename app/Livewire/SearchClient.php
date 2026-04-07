@@ -3,23 +3,21 @@
 namespace App\Livewire;
 
 use App\Models\Product;
-use App\Models\SystemSetting;
 use Livewire\Component;
 
 class SearchClient extends Component
 {
-    public $search = '';
+    public string $search = '';
 
     public function render()
     {
-        $searchResults = [];
+        $searchResults = strlen($this->search) >= 2
+            ? Product::with('category')
+                ->where('name', 'like', '%' . $this->search . '%')
+                ->limit(7)
+                ->get()
+            : collect();
 
-        if (strlen($this->search) > 2) {
-            $searchResults = Product::with('category')->where('name', 'like', '%' . $this->search . '%')->limit(7)->get();
-        }   
-
-        $systemName = SystemSetting::first();
-
-        return view('livewire.search-client', compact('searchResults', 'systemName'));
+        return view('livewire.search-client', compact('searchResults'));
     }
 }

@@ -1,10 +1,10 @@
 @extends('layouts.frontend')
 
 @section('seo')
-    <title>{{ $systemInfo->name }} | Checkout</title>
+    <title>{{ $shareSettings->name }} | Checkout</title>
     <meta charset="UTF-8">
-    <meta name="description" content="{{ $systemInfo->description }}">
-    <meta name="keywords" content="{{ $systemInfo->description }}, {{ $systemInfo->description }}">
+    <meta name="description" content="{{ $shareSettings->description }}">
+    <meta name="keywords" content="{{ $shareSettings->description }}, {{ $shareSettings->name }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 @endsection
 
