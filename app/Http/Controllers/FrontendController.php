@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
 use App\Models\Slide;
 use App\Models\Contact;
 use App\Models\Product;
@@ -10,7 +9,6 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
@@ -31,7 +29,7 @@ class FrontendController extends Controller
     {
         $product = Product::where('slug', $slug)->with('photos')->firstOrFail();
 
-        $singleImage = $product->photos()->get()->first();
+        $singleImage = $product->photos->first();
 
         $relatedProducts = $product->category->products()->with('photos')->inRandomOrder()->take(5)->get();
 
@@ -42,11 +40,10 @@ class FrontendController extends Controller
 
     public function contact()
     {
-        $info = SystemSetting::first();
         $shareSettings = SystemSetting::first();
         $products = Product::orderBy('id', 'DESC')->with('photos')->take(4)->get();
 
-        return view('contact', compact('info', 'products', 'shareSettings'));
+        return view('contact', compact('products', 'shareSettings'));
     }
 
     public function contactStore(Request $request)
@@ -74,11 +71,9 @@ class FrontendController extends Controller
 
         $category = Category::with('subcategories')->get();
 
-        $systemInfo = SystemSetting::first();
-
         $shareSettings = SystemSetting::first();
 
-        return view('categories', compact('products', 'category', 'systemInfo', 'shareSettings'));
+        return view('categories', compact('products', 'category', 'shareSettings'));
     }
 
     public function category($slug)

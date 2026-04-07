@@ -15,11 +15,8 @@ class SearchClient extends Component
         $searchResults = [];
 
         if (strlen($this->search) > 2) {
-
-            $searchResults = Product::with('category')->where('name', 'like', '%' . $this->search . '%')->get();
+            $searchResults = Product::with('category')->where('name', 'like', '%' . $this->search . '%')->limit(7)->get();
         }   
-
-        $searchResults = collect($searchResults)->take(7);
 
         $systemName = SystemSetting::first();
 

@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Storage;
  
 class SystemSettingsController extends Controller
 {
-   
-    // public function __construct()
-    // {
-    //     $this->middleware('password.confirm');
-    // }
 
     public function index()
     {
@@ -79,21 +74,7 @@ class SystemSettingsController extends Controller
             $data['favicon'] = $faviconPath;
         }
 
-        if (request('logo')) {
-            $setting->update(array_merge(
-                $data,
-                ['logo' => $logoPath],
-                ['favicon' => isset($faviconPath) ? $faviconPath : '']
-            ));
-        } elseif (request('favicon')) {
-            $setting->update(array_merge(
-                $data,
-                ['favicon' => $faviconPath]
-            ));
-        } else {
-            $setting->update($data);
-        }
-        // $setting->update($data);
+        $setting->update($data);
         return redirect()->route('system-settings.index')->with('success', 'Company info updated successfully');
     }
 }

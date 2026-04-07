@@ -52,20 +52,6 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
-        //resized images
-        /*  foreach ($request->images as $photo) {
-            $name = Str::random(14);
-
-            $extension = $photo->getClientOriginalExtension();
-
-            $image = Image::make($photo)->fit(1200, 1200)->encode($extension);
-
-            Storage::disk('public')->put($path = "products/{$product->id}/{$name}.{$extension}", (string) $image);
-
-            $photo = Photo::create([
-                'images' => $path,
-                'product_id' => $product->id,
-            ]); */
 
         foreach ($request->images as $photo) {
             // Generate a random name for the image
@@ -91,10 +77,6 @@ class ProductController extends Controller
 
         $subCategories = SubCategory::all();
 
-        // $productSubCategory = $product->subcategory()->get();
-
-        // dd($productSubCategory);
-        // $attributes = $product->attributes()->get();
 
         return view('admin.products.create', compact('product', 'categories', 'subCategories'));
     }
@@ -116,23 +98,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        /* if ($request->hasFile('images')) {
 
-            foreach ($request->images as $photo) {
-                $name = Str::random(14);
-
-                $extension = $photo->getClientOriginalExtension();
-
-                $image = Image::make($photo)->fit(1200, 1200)->encode($extension);
-
-                Storage::disk('public')->put($path = "products/{$product->id}/{$name}.{$extension}", (string) $image);
-
-                $photo = Photo::create([
-                    'images' => $path,
-                    'product_id' => $product->id,
-                ]);
-            }
-        } */
 
         if ($request->hasFile('images')) {
 
@@ -143,7 +109,7 @@ class ProductController extends Controller
                 $extension = $photo->getClientOriginalExtension();
 
                 // Store the image in the 'public' disk
-                $path = $photo->storeAs("products/{$product->name}", "{$name}.{$extension}", 'public');
+                $path = $photo->storeAs("products/{$product->id}", "{$name}.{$extension}", 'public');
 
                 // Create a photo record for each uploaded image
                 Photo::create([
@@ -166,12 +132,10 @@ class ProductController extends Controller
         }
 
         $product->photos()->delete();
-        //delete product
         $product->delete();
-        $productFolder = storage_path('app/public/products/' . $product->id);
-        if (is_dir($productFolder) && count(scandir($productFolder)) == 2) {
-            rmdir($productFolder); // Remove the empty directory
-        }
+        
+        Storage::disk('public')->deleteDirectory('products/' . $product->id);
+        
         return redirect()->route('products.index')->with('success', "Deleted product successfully");
     }
     public function destroyImage($id)

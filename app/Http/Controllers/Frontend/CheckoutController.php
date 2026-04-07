@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use App\Http\Controllers\Controller;
@@ -44,14 +45,16 @@ class CheckoutController extends Controller
             'notes' => 'max:255',
         ]);
 
+        $numbers = $this->getNumbers();
+
         // Tạo đơn hàng
         $order = Order::create([
             'order_number' => uniqid(),
             'user_id' => auth()->user()->id ?? null,
-            'billing_discount' => $this->getNumbers()['discount'],
+            'billing_discount' => $numbers['discount'],
             'billing_discount_code' => session()->get('coupon')['name'] ?? null,
-            'billing_subtotal' => $this->getNumbers()['newSubtotal'],
-            'billing_total' => $this->getNumbers()['newTotal'],
+            'billing_subtotal' => $numbers['newSubtotal'],
+            'billing_total' => $numbers['newTotal'],
             'billing_fullname' => $request->billing_fullname,
             'billing_address' => $request->billing_address,
             'billing_city' => $request->billing_city,
@@ -63,17 +66,6 @@ class CheckoutController extends Controller
             'payment_method' => $request->payment_method,
         ]);
 
-        // Cập nhật thông tin người dùng nếu đã đăng nhập
-        if (auth()->check()) {
-            auth()->user()->update([
-                'phone' => $request->billing_phone,
-                'address' => $request->billing_address,
-                'city' => $request->billing_city,
-                'province' => $request->billing_province,
-                'notes' => $request->notes,
-            ]);
-        }
-
         // Lưu sản phẩm trong đơn hàng
         $cart = session()->get('cart', []);
         foreach ($cart as $item) {
@@ -82,6 +74,9 @@ class CheckoutController extends Controller
                 'product_id' => $item['id'],
                 'quantity' => $item['quantity'],
             ]);
+
+            // Trừ tồn kho tại đây
+            Product::where('id', $item['id'])->decrement('quantity', $item['quantity']);
         }
 
         // Xóa giỏ hàng sau khi đặt hàng

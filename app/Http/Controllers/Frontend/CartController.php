@@ -32,7 +32,6 @@ class CartController extends Controller
         }
 
         CartHelper::addToCart($product, $request->quantity);
-        $product->decrement('quantity', $request->quantity);
 
         return redirect()->route('cart.index')->with('success', "$product->name đã được thêm vào giỏ hàng!");
     }
@@ -59,6 +58,10 @@ class CartController extends Controller
     
         session()->put('cart', $cart);
     
+        if (empty(CartHelper::getCart()) || CartHelper::getCartTotal() <= 0) {
+            session()->forget('coupon');
+        }
+    
         return redirect()->route('cart.index')->with('success', "Số lượng sản phẩm đã được cập nhật!");
     }
 
@@ -66,7 +69,7 @@ class CartController extends Controller
     {
         CartHelper::removeFromCart($id);
 
-        if (empty(CartHelper::getCart()) || (session()->has('coupon') && CartHelper::getCartTotal() < session('coupon')['minimum_amount'])) {
+        if (empty(CartHelper::getCart()) || CartHelper::getCartTotal() <= 0) {
             session()->forget('coupon');
         }
         return redirect()->back()->with('success', "Item removed successfully!");

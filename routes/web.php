@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\admin\RevenueController;
+use App\Http\Controllers\Admin\RevenueController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\CouponsController;
@@ -55,6 +55,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('admin/categories', CategoryController::class);
     Route::resource('admin/subcategories', SubCategoryController::class);
+    Route::delete('admin/products/photo/{id}', [ProductController::class, 'destroyImage'])->name('destroyImage');
     Route::resource('admin/products', ProductController::class);
     Route::resource('admin/users', UserController::class);
     Route::resource('admin/roles', RoleController::class);
@@ -62,7 +63,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('admin/coupon', CouponController::class);
     Route::resource('admin/orders', OrderController::class);
     Route::resource('admin/order-statuses', OrderStatusController::class);
-    Route::delete('admin/products/photo/{id}', [ProductController::class, 'destroyImage'])->name('destroyImage');
     Route::resource('admin/revenue', RevenueController::class);
     Route::get('/admin/contact', [MessageController::class, 'index'])->name('contactMessages');
     Route::get('/admin/contact/{id}', [MessageController::class, 'show'])->name('contact.show');

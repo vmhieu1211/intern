@@ -24,7 +24,11 @@ class SlideController extends Controller
 
     public function store(Request $request)
     {
-        $image = $request->image->store('uploads/slides', 'public');
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
+        ]);
+
+        $image = $request->file('image')->store('uploads/slides', 'public');
 
         Slide::create([
             'image' => $image,

@@ -21,10 +21,10 @@ class ProfileController extends Controller
 
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
 
         if (auth()->id() != $order->user_id) {
-            return back()->withErrors('You do not have acces to this!');
+            abort(403, 'You do not have access to this order!');
         }
 
         $products = $order->products()->get();
